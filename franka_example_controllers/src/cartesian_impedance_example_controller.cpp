@@ -177,8 +177,16 @@ void CartesianImpedanceExampleController::update(const ros::Time& /*time*/,
                     jacobian.transpose() * jacobian_transpose_pinv) *
                        (nullspace_stiffness_ * (q_d_nullspace_ - q) -
                         (2.0 * sqrt(nullspace_stiffness_)) * dq);
+
+  // offset to correct bad 6th joint torque sensor
+  Eigen::VectorXd tau_offset = Eigen::VectorXd::Zero(7);
+  tau_offset(5) = -1.7; // 6th joint
+
+  // Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
+  // std::cout << tau_offset.format(CleanFmt);
+
   // Desired torque
-  tau_d << tau_task + tau_nullspace + coriolis;
+  tau_d << tau_task + tau_nullspace + coriolis + tau_offset;
   // Saturate torque rate to avoid discontinuities
   tau_d << saturateTorqueRate(tau_d, tau_J_d);
   for (size_t i = 0; i < 7; ++i) {

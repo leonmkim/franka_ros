@@ -27,3 +27,88 @@ collision_config:
   upper_force_thresholds_acceleration: [20.0, 20.0, 20.0, 25.0, 25.0, 25.0]  # [N, N, N, Nm, Nm, Nm]
   lower_force_thresholds_nominal: [20.0, 20.0, 20.0, 25.0, 25.0, 25.0]  # [N, N, N, Nm, Nm, Nm]
   upper_force_thresholds_nominal: [20.0, 20.0, 20.0, 25.0, 25.0, 25.0]  # [N, N, N, Nm, Nm, Nm]
+joint_limits:
+  panda_joint1:
+    has_position_limits: true
+    min_position: -2.8973
+    max_position: 2.8973
+    has_velocity_limits: true
+    max_velocity: 0.5 #2.1750
+    has_acceleration_limits: true
+    max_acceleration: 15.0
+    has_jerk_limits: true
+    max_jerk: 7500.0
+    has_effort_limits: true
+    max_effort: 5.0  #87.0
+  panda_joint2:
+    has_position_limits: true
+    min_position: -1.7628
+    max_position: 1.7628
+    has_velocity_limits: true
+    max_velocity: 0.5 #2.1750
+    has_acceleration_limits: true
+    max_acceleration: 7.5
+    has_jerk_limits: true
+    max_jerk: 3750.0
+    has_effort_limits: true
+    max_effort: 10.0 #87.0
+  panda_joint3:
+    has_position_limits: true
+    min_position: -2.8973
+    max_position: 2.8973
+    has_velocity_limits: true
+    max_velocity: 0.5 #2.1750
+    has_acceleration_limits: true
+    max_acceleration: 10.0
+    has_jerk_limits: true
+    max_jerk: 5000.0
+    has_effort_limits: true
+    max_effort: 10.0 #87.0
+  panda_joint4:
+    has_position_limits: true
+    min_position: -3.0718
+    max_position: -0.0698
+    has_velocity_limits: true
+    max_velocity: 2.0 #0.3 #2.1750  
+    has_acceleration_limits: true
+    max_acceleration: 12.5
+    has_jerk_limits: true
+    max_jerk: 6250.0
+    has_effort_limits: true
+    max_effort: 10.0 #87.0
+  panda_joint5:
+    has_position_limits: true
+    min_position: -2.8973
+    max_position: 2.8973
+    has_velocity_limits: true
+    max_velocity:  0.5 # 2.0# 2.6100
+    has_acceleration_limits: true
+    max_acceleration: 15.0
+    has_jerk_limits: true
+    max_jerk: 7500.0
+    has_effort_limits: true
+    max_effort: 2.0 #12.0
+  panda_joint6:
+    has_position_limits: true
+    min_position: -0.0175
+    max_position: 3.7525
+    has_velocity_limits: true
+    max_velocity: 2.0 #0.5 #2.6100  
+    has_acceleration_limits: true
+    max_acceleration: 20.0 #0.1 
+    has_jerk_limits: true
+    max_jerk: 10000.0
+    has_effort_limits: true
+    max_effort: 7.5 #12.0
+  panda_joint7:
+    has_position_limits: true
+    min_position: -2.8973
+    max_position: 2.8973
+    has_velocity_limits: true
+    max_velocity: 0.5 # 2.6100
+    has_acceleration_limits: true
+    max_acceleration: 20.0
+    has_jerk_limits: true
+    max_jerk: 10000.0
+    has_effort_limits: true
+    max_effort: 2.0 #12.0
