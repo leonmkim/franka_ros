@@ -383,6 +383,11 @@ class FrankaHW : public hardware_interface::RobotHW {
                 "FrankaHW: Could not parse joint limit for joint %s from the param server",
                 joint_name.c_str());
           }
+          else {
+            ROS_WARN("FrankaHW: joint limit for %s from ros param server succesfully loaded!" 
+              "Be aware that motions/effort will be saturated to uphold specified limits.",
+              joint_name.c_str());
+          }
 
 
           T limit_handle(command_interface.getHandle(joint_name), joint_limits, soft_limits);
