@@ -60,12 +60,6 @@ class FrankaCombinedHW : public combined_robot_hw::CombinedRobotHW {
    */
   bool disconnect();
 
-  /**
-   * Checks whether the robots are in error or reflex mode.
-   * @return true if in error state, false otherwise.
-   */
-  bool hasError();
-
  protected:
   std::unique_ptr<actionlib::SimpleActionServer<franka_msgs::ErrorRecoveryAction>>
       combined_recovery_action_server_;
@@ -74,6 +68,7 @@ class FrankaCombinedHW : public combined_robot_hw::CombinedRobotHW {
 
  private:
   void handleError();
+  bool hasError();
   void triggerError();
   bool is_recovering_{false};
 };
