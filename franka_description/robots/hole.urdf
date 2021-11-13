@@ -1,0 +1,205 @@
+<?xml version="1.0" ?>
+<robot name="hole" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<link name="hole_link">
+		<inertial>
+			<mass value="1"/>
+			<inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+		</inertial>
+		<collision>
+			<origin rpy="0 0 1.5707963267948966" xyz="0.02175 0.0 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 1.5707963267948966" xyz="0.02175 0.0 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 1.9634954084936207" xyz="0.020094379832120486 0.008323364653940702 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 1.9634954084936207" xyz="0.020094379832120486 0.008323364653940702 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 2.356194490192345" xyz="0.015379572490807408 0.015379572490807406 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 2.356194490192345" xyz="0.015379572490807408 0.015379572490807406 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 2.748893571891069" xyz="0.008323364653940703 0.020094379832120486 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 2.748893571891069" xyz="0.008323364653940703 0.020094379832120486 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 3.141592653589793" xyz="1.3318033940727466e-18 0.02175 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 3.141592653589793" xyz="1.3318033940727466e-18 0.02175 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 3.5342917352885173" xyz="-0.008323364653940702 0.020094379832120486 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 3.5342917352885173" xyz="-0.008323364653940702 0.020094379832120486 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 3.9269908169872414" xyz="-0.015379572490807406 0.015379572490807408 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 3.9269908169872414" xyz="-0.015379572490807406 0.015379572490807408 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 4.319689898685965" xyz="-0.020094379832120486 0.008323364653940705 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 4.319689898685965" xyz="-0.020094379832120486 0.008323364653940705 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 4.71238898038469" xyz="-0.02175 2.663606788145493e-18 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 4.71238898038469" xyz="-0.02175 2.663606788145493e-18 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 5.105088062083414" xyz="-0.020094379832120486 -0.0083233646539407 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 5.105088062083414" xyz="-0.020094379832120486 -0.0083233646539407 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 5.497787143782138" xyz="-0.015379572490807411 -0.015379572490807406 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 5.497787143782138" xyz="-0.015379572490807411 -0.015379572490807406 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 5.890486225480862" xyz="-0.008323364653940714 -0.02009437983212048 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 5.890486225480862" xyz="-0.008323364653940714 -0.02009437983212048 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 6.283185307179586" xyz="-3.9954101822182395e-18 -0.02175 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 6.283185307179586" xyz="-3.9954101822182395e-18 -0.02175 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 6.675884388878311" xyz="0.008323364653940707 -0.020094379832120483 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 6.675884388878311" xyz="0.008323364653940707 -0.020094379832120483 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 7.0685834705770345" xyz="0.015379572490807404 -0.015379572490807411 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 7.0685834705770345" xyz="0.015379572490807404 -0.015379572490807411 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 7.461282552275758" xyz="0.02009437983212048 -0.008323364653940716 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 7.461282552275758" xyz="0.02009437983212048 -0.008323364653940716 0.06"/>
+			<geometry>
+				<box size="0.01193474204277948 0.0165 0.12"/>
+			</geometry>
+		</visual>
+	</link>
+	<gazebo>
+		<material>Gazebo/gray</material>
+		<static>true</static>
+	</gazebo>
+</robot>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="peg">
+  <!-- utils /-->
+  <xacro:include filename="$(find franka_panda_description)/robots/utils.xacro"/>
+
+  <xacro:macro name="peg" params="connected_to:='' ns:='' rpy:='0 0 0' xyz:='0 0 0' ">
+    
+    <xacro:unless value="${connected_to == ''}">
+      <joint name="${ns}_peg_joint" type="fixed">
+        <parent link="${connected_to}"/>
+        <child link="${ns}_peg"/>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+      </joint>
+    </xacro:unless>
+    <!-- 1" diameter and 4.375" length (including mount plate) -->
+    <xacro:property name="radius" value="0.0127" />
+    <xacro:property name="length" value="0.111125" />
+    <xacro:property name="mass" value="0.23" />
+    <!-- <xacro:property name="mass" value="5.0" /> -->
+    
+    <link name="${ns}_peg">
+      <!-- <origin xyz="0 0 0" rpy="0 0 0"/> -->
+      <visual>
+        <origin xyz="0 0 ${length/2}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="${length}" radius="${radius}"/>
+        </geometry>
+        <material name="gray">
+          <color rgba="0.75 0.75 0.75 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${length/2}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="${length}" radius="${radius}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 ${length/2}"/>
+        <mass value="${mass}"/>
+      	<cylinder_inertia_def radius="${radius}" length="${length}" mass="${mass}"/>
+      </inertial>
+	  </link>
+  
+  </xacro:macro>
+</robot>
