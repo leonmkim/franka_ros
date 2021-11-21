@@ -384,7 +384,6 @@
     <xacro:property name="radius" value="0.0127" />
     <xacro:property name="length" value="0.111125" />
     <xacro:property name="mass" value="0.23" />
-    <!-- <xacro:property name="mass" value="5.0" /> -->
     
     <link name="${ns}_peg">
       <!-- <origin xyz="0 0 0" rpy="0 0 0"/> -->
