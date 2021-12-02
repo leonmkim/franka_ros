@@ -1,6 +1,7 @@
 // Copyright (c) 2017 Franka Emika GmbH
 // Use of this source code is governed by the Apache-2.0 license, see LICENSE
 #include <franka_hw/services.h>
+// #include <franka_msgs/TriggerError.h>
 
 #include <mutex>
 
@@ -8,6 +9,7 @@ namespace franka_hw {
 
 void setupServices(franka::Robot& robot,
                    std::mutex& robot_mutex,
+                  //  std::atomic_bool& has_error, 
                    ros::NodeHandle& node_handle,
                    ServiceContainer& services) {
   services
@@ -50,6 +52,12 @@ void setupServices(franka::Robot& robot,
                                                 std::lock_guard<std::mutex> lock(robot_mutex);
                                                 return franka_hw::setLoad(robot, req, res);
                                               });
+      // .advertiseService<franka_msgs::TriggerError>( // trigger error service for killing control
+      //     node_handle, "trigger_error",
+      //     [&has_error](auto&& req, auto&& res) { 
+      //       ROS_INFO("has_error switched to %d", req.has_error); 
+      //       has_error = req.has_error; 
+      //     });
 }
 
 void setCartesianImpedance(franka::Robot& robot,

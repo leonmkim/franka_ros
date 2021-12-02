@@ -114,6 +114,7 @@ void FrankaCombinableHW::setupServicesAndActionServers(ros::NodeHandle& node_han
   }
 
   services_ = std::make_unique<ServiceContainer>();
+  // setupServices(*robot_, robot_mutex_, has_error_, node_handle, *services_);
   setupServices(*robot_, robot_mutex_, node_handle, *services_);
 
   if (!recovery_action_server_) {

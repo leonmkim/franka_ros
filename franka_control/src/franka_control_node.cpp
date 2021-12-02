@@ -42,6 +42,7 @@ int main(int argc, char** argv) {
     auto& robot = franka_control.robot();
 
     services = std::make_unique<ServiceContainer>();
+    // franka_hw::setupServices(robot, franka_control.robotMutex(), has_error, node_handle, *services);
     franka_hw::setupServices(robot, franka_control.robotMutex(), node_handle, *services);
 
     recovery_action_server =
@@ -144,7 +145,13 @@ int main(int argc, char** argv) {
             control_manager.update(now, period, true);
             franka_control.checkJointLimits();
             franka_control.reset();
-          } else {
+          } 
+          // check if trigger error service has been called and break out of control callback if so
+          // else if (has_error) { 
+          //   ROS_INFO("Has_error triggered! Kill controllers and send recovery action to reset.");
+          //   return false;
+          // } 
+          else {
             control_manager.update(now, period);
             franka_control.checkJointLimits();
             franka_control.enforceLimits(period);

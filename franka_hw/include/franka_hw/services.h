@@ -17,6 +17,7 @@
 #include <franka_msgs/SetJointImpedance.h>
 #include <franka_msgs/SetKFrame.h>
 #include <franka_msgs/SetLoad.h>
+#include <franka_msgs/TriggerError.h>
 
 namespace franka_hw {
 
@@ -82,7 +83,8 @@ class ServiceContainer {
 void setupServices(franka::Robot& robot,
                    std::mutex& robot_mutex,
                    ros::NodeHandle& node_handle,
-                   ServiceContainer& services);
+                   ServiceContainer& services); 
+                  //  std::atomic_bool has_error,
 
 /**
  * Callback for the service interface to franka::robot::setCartesianImpedance.
