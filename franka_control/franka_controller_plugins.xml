@@ -3,3 +3,8 @@
     <description>A controller that publishes the complete robot state</description>
   </class>
 </library>
+<library path="lib/libfranka_state_controller_custom">
+  <class name="franka_control/FrankaStateControllerCustom" type="franka_control::FrankaStateControllerCustom" base_class_type="controller_interface::ControllerBase">
+    <description>A custom controller that publishes the complete robot state</description>
+  </class>
+</library>

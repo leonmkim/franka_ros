@@ -58,7 +58,31 @@ target_include_directories(franka_state_controller SYSTEM PUBLIC
   ${Franka_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
+
 target_include_directories(franka_state_controller PUBLIC
+  include
+)
+
+## franka_state_controller_custom
+add_library(franka_state_controller_custom
+  src/franka_state_controller_custom.cpp
+)
+
+add_dependencies(franka_state_controller_custom
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+  ${catkin_EXPORTED_TARGETS}
+)
+
+target_link_libraries(franka_state_controller_custom
+  ${Franka_LIBRARIES}
+  ${catkin_LIBRARIES}
+)
+
+target_include_directories(franka_state_controller_custom SYSTEM PUBLIC
+  ${Franka_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS}
+)
+target_include_directories(franka_state_controller_custom PUBLIC
   include
 )
 
@@ -101,6 +125,7 @@ target_include_directories(franka_combined_control_node SYSTEM PUBLIC
 
 ## Installation
 install(TARGETS franka_state_controller
+                franka_state_controller
                 franka_control_node
                 franka_combined_control_node
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}

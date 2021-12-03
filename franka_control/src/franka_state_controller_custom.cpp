@@ -1,6 +1,6 @@
 // Copyright (c) 2017 Franka Emika GmbH
 // Use of this source code is governed by the Apache-2.0 license, see LICENSE
-#include <franka_control/franka_state_controller.h>
+#include <franka_control/franka_state_controller_custom.h>
 
 #include <cmath>
 #include <memory>
@@ -135,21 +135,21 @@ franka_msgs::Errors errorsToMessage(const franka::Errors& error) {
 
 namespace franka_control {
 
-bool FrankaStateController::init(hardware_interface::RobotHW* robot_hardware,
+bool FrankaStateControllerCustom::init(hardware_interface::RobotHW* robot_hardware,
                                  ros::NodeHandle& root_node_handle,
                                  ros::NodeHandle& controller_node_handle) {
   franka_state_interface_ = robot_hardware->get<franka_hw::FrankaStateInterface>();
   if (franka_state_interface_ == nullptr) {
-    ROS_ERROR("FrankaStateController: Could not get Franka state interface from hardware");
+    ROS_ERROR("FrankaStateControllerCustom: Could not get Franka state interface from hardware");
     return false;
   }
   if (!controller_node_handle.getParam("arm_id", arm_id_)) {
-    ROS_ERROR("FrankaStateController: Could not get parameter arm_id");
+    ROS_ERROR("FrankaStateControllerCustom: Could not get parameter arm_id");
     return false;
   }
   double publish_rate(30.0);
   if (!controller_node_handle.getParam("publish_rate", publish_rate)) {
-    ROS_INFO_STREAM("FrankaStateController: Did not find publish_rate. Using default "
+    ROS_INFO_STREAM("FrankaStateControllerCustom: Did not find publish_rate. Using default "
                     << publish_rate << " [Hz].");
   }
   trigger_publish_ = franka_hw::TriggerRate(publish_rate);
@@ -157,7 +157,7 @@ bool FrankaStateController::init(hardware_interface::RobotHW* robot_hardware,
   if (!controller_node_handle.getParam("joint_names", joint_names_) ||
       joint_names_.size() != robot_state_.q.size()) {
     ROS_ERROR(
-        "FrankaStateController: Invalid or no joint_names parameters provided, aborting "
+        "FrankaStateControllerCustom: Invalid or no joint_names parameters provided, aborting "
         "controller init!");
     return false;
   }
@@ -166,7 +166,24 @@ bool FrankaStateController::init(hardware_interface::RobotHW* robot_hardware,
     franka_state_handle_ = std::make_unique<franka_hw::FrankaStateHandle>(
         franka_state_interface_->getHandle(arm_id_ + "_robot"));
   } catch (const hardware_interface::HardwareInterfaceException& ex) {
-    ROS_ERROR_STREAM("FrankaStateController: Exception getting franka state handle: " << ex.what());
+    ROS_ERROR_STREAM("FrankaStateControllerCustom: Exception getting franka state handle: " << ex.what());
+    return false;
+  }
+
+  // add model handle
+  auto* model_interface = robot_hardware->get<franka_hw::FrankaModelInterface>();
+  if (model_interface == nullptr) {
+    ROS_ERROR_STREAM(
+        "FrankaStateControllerCustom: Error getting model interface from hardware");
+    return false;
+  }
+  try {
+    model_handle_ = std::make_unique<franka_hw::FrankaModelHandle>(
+        model_interface->getHandle(arm_id_ + "_model"));
+  } catch (hardware_interface::HardwareInterfaceException& ex) {
+    ROS_ERROR_STREAM(
+        "FrankaStateControllerCustom: Exception getting model handle from interface: "
+        << ex.what());
     return false;
   }
 
@@ -231,7 +248,7 @@ bool FrankaStateController::init(hardware_interface::RobotHW* robot_hardware,
   return true;
 }
 
-void FrankaStateController::update(const ros::Time& time, const ros::Duration& /* period */) {
+void FrankaStateControllerCustom::update(const ros::Time& time, const ros::Duration& /* period */) {
   if (trigger_publish_()) {
     robot_state_ = franka_state_handle_->getRobotState();
     publishFrankaStates(time);
@@ -242,7 +259,17 @@ void FrankaStateController::update(const ros::Time& time, const ros::Duration& /
   }
 }
 
-void FrankaStateController::publishFrankaStates(const ros::Time& time) {
+void FrankaStateControllerCustom::publishFrankaStates(const ros::Time& time) {
+  // add model handle calls
+  std::array<double, 7> coriolis = model_handle_->getCoriolis();
+  std::array<double, 7> gravity = model_handle_->getGravity();
+  // std::array<double, 49> mass_matrix = model_handle_->getMass();
+  std::array<double, 42> O_Jac_EE = model_handle_->getZeroJacobian(franka::Frame::kEndEffector);
+  // Eigen::Map<Eigen::Matrix<double, 6, 7>> jacobian(O_Jac_EE.data());
+
+  //  jacobian * dq
+  // Eigen::Matrix<double, 6, 1> ee_vel = jacobian * dq;
+  
   if (publisher_franka_states_.trylock()) {
     static_assert(
         sizeof(robot_state_.cartesian_collision) == sizeof(robot_state_.cartesian_contact),
@@ -305,6 +332,10 @@ void FrankaStateController::publishFrankaStates(const ros::Time& time) {
       publisher_franka_states_.msg_.joint_collision[i] = robot_state_.joint_collision[i];
       publisher_franka_states_.msg_.joint_contact[i] = robot_state_.joint_contact[i];
       publisher_franka_states_.msg_.tau_ext_hat_filtered[i] = robot_state_.tau_ext_hat_filtered[i];
+      // added grav/coriolis
+      publisher_franka_states_.msg_.gravity[i] = gravity[i];
+      publisher_franka_states_.msg_.coriolis[i] = coriolis[i];
+
     }
 
     static_assert(sizeof(robot_state_.elbow) == sizeof(robot_state_.elbow_d),
@@ -361,6 +392,11 @@ void FrankaStateController::publishFrankaStates(const ros::Time& time) {
       publisher_franka_states_.msg_.F_x_Ctotal[i] = robot_state_.F_x_Ctotal[i];
     }
 
+    // add jacobian
+    for (size_t i = 0; i < O_Jac_EE.size(); i++) {
+          publisher_franka_states_.msg_.O_Jac_EE[i] = O_Jac_EE[i];
+    }
+
     publisher_franka_states_.msg_.time = robot_state_.time.toSec();
     publisher_franka_states_.msg_.control_command_success_rate =
         robot_state_.control_command_success_rate;
@@ -370,33 +406,33 @@ void FrankaStateController::publishFrankaStates(const ros::Time& time) {
 
     switch (robot_state_.robot_mode) {
       case franka::RobotMode::kOther:
-        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaState::ROBOT_MODE_OTHER;
+        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaStateCustom::ROBOT_MODE_OTHER;
         break;
 
       case franka::RobotMode::kIdle:
-        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaState::ROBOT_MODE_IDLE;
+        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaStateCustom::ROBOT_MODE_IDLE;
         break;
 
       case franka::RobotMode::kMove:
-        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaState::ROBOT_MODE_MOVE;
+        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaStateCustom::ROBOT_MODE_MOVE;
         break;
 
       case franka::RobotMode::kGuiding:
-        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaState::ROBOT_MODE_GUIDING;
+        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaStateCustom::ROBOT_MODE_GUIDING;
         break;
 
       case franka::RobotMode::kReflex:
-        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaState::ROBOT_MODE_REFLEX;
+        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaStateCustom::ROBOT_MODE_REFLEX;
         break;
 
       case franka::RobotMode::kUserStopped:
         publisher_franka_states_.msg_.robot_mode =
-            franka_msgs::FrankaState::ROBOT_MODE_USER_STOPPED;
+            franka_msgs::FrankaStateCustom::ROBOT_MODE_USER_STOPPED;
         break;
 
       case franka::RobotMode::kAutomaticErrorRecovery:
         publisher_franka_states_.msg_.robot_mode =
-            franka_msgs::FrankaState::ROBOT_MODE_AUTOMATIC_ERROR_RECOVERY;
+            franka_msgs::FrankaStateCustom::ROBOT_MODE_AUTOMATIC_ERROR_RECOVERY;
         break;
     }
 
@@ -406,7 +442,7 @@ void FrankaStateController::publishFrankaStates(const ros::Time& time) {
   }
 }
 
-void FrankaStateController::publishJointStates(const ros::Time& time) {
+void FrankaStateControllerCustom::publishJointStates(const ros::Time& time) {
   if (publisher_joint_states_.trylock()) {
     static_assert(sizeof(robot_state_.q) == sizeof(robot_state_.dq),
                   "Robot state joint members do not have same size");
@@ -439,7 +475,7 @@ void FrankaStateController::publishJointStates(const ros::Time& time) {
   }
 }
 
-void FrankaStateController::publishTransforms(const ros::Time& time) {
+void FrankaStateControllerCustom::publishTransforms(const ros::Time& time) {
   if (publisher_transforms_.trylock()) {
     tf::StampedTransform stamped_transform(convertArrayToTf(robot_state_.F_T_NE), time,
                                            arm_id_ + "_link8", arm_id_ + "_NE");
@@ -460,7 +496,7 @@ void FrankaStateController::publishTransforms(const ros::Time& time) {
   }
 }
 
-void FrankaStateController::publishExternalWrench(const ros::Time& time) {
+void FrankaStateControllerCustom::publishExternalWrench(const ros::Time& time) {
   if (publisher_external_wrench_.trylock()) {
     publisher_external_wrench_.msg_.header.frame_id = arm_id_ + "_K";
     publisher_external_wrench_.msg_.header.stamp = time;
@@ -476,4 +512,4 @@ void FrankaStateController::publishExternalWrench(const ros::Time& time) {
 
 }  // namespace franka_control
 
-PLUGINLIB_EXPORT_CLASS(franka_control::FrankaStateController, controller_interface::ControllerBase)
+PLUGINLIB_EXPORT_CLASS(franka_control::FrankaStateControllerCustom, controller_interface::ControllerBase)
