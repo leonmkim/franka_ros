@@ -1,10 +1,32 @@
 <?xml version="1.0" ?>
 <robot name="hole" xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<link name="hole_link">
+	<link name="hole_root_link">
+	</link>
+	<joint name="hole_root_joint" type="fixed">
+		<parent link="hole_root_link"/>
+		<child link="hole_base_link"/>
+		<origin xyz="0 0 0" rpy="0 0 0"/>
+ 	</joint>
+	<link name="hole_base_link">
+		<!-- gazebo complaining about having inertia in the root link... -->
 		<inertial>
 			<mass value="1"/>
 			<inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
 		</inertial>
+		<!-- Add hole bottom... -->
+		<collision>
+			<origin rpy="0 0 0" xyz="0.0 0.0 0.0025"/>
+			<geometry>
+				<box size="0.04 0.04 0.01"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0 0 0" xyz="0.0 0.0 0.0025"/>
+			<geometry>
+				<box size="0.04 0.04 0.005"/>
+			</geometry>
+		</visual>
+		<!-- cylinder walls... -->
 		<collision>
 			<origin rpy="0 0 1.5707963267948966" xyz="0.02175 0.0 0.06"/>
 			<geometry>
@@ -198,6 +220,36 @@
 			</geometry>
 		</visual>
 	</link>
+	<!-- adding fake links for tf frames-->
+	<!-- <joint name="hole_base_joint" type="fixed">
+		<parent link="hole_root_link"/>
+		<child link="hole_base_link"/>
+		<origin xyz="0 0 0" rpy="0 0 0"/>
+ 	</joint>
+	<link name="hole_base_link">
+		<inertial>
+			<mass value=".001"/>
+			<inertia ixx=".001" ixy="0" ixz="0" iyy=".001" iyz="0" izz=".001"/>
+		</inertial>
+	</link> -->
+	<!-- <gazebo reference='hole_base_joint'>
+   		<preserveFixedJoint>true</preserveFixedJoint>
+	</gazebo> -->
+	
+	<joint name="hole_top_joint" type="fixed">
+		<parent link="hole_root_link"/>
+		<child link="hole_top_link"/>
+		<origin xyz="0 0 0.12" rpy="0 0 0"/>
+ 	</joint>
+	<link name="hole_top_link">
+		<!-- <inertial>
+			<mass value=".001"/>
+			<inertia ixx=".001" ixy="0" ixz="0" iyy=".001" iyz="0" izz=".001"/>
+		</inertial> -->
+	</link>
+	<!-- <gazebo reference='hole_top_joint'>
+		<preserveFixedJoint>true</preserveFixedJoint>
+	</gazebo> -->
 	<gazebo>
 		<material>Gazebo/gray</material>
 		<static>true</static>
