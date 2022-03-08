@@ -11,6 +11,8 @@
   <url type="bugtracker">https://github.com/frankaemika/franka_ros/issues</url>
   <author>Franka Emika GmbH</author>
 
+  <build_depend>eigen</build_depend>
+
   <buildtool_depend>catkin</buildtool_depend>
 
   <depend>libfranka</depend>

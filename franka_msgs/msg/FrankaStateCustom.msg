@@ -57,4 +57,8 @@ franka_msgs/Errors last_motion_errors
 float64[7] gravity
 float64[7] coriolis
 float64[42] O_Jac_EE # zero jacobian of end-effector frame. Vectorized 6x7 Jacobian, column-major
+float64[49] mass_matrix # mass matrix of end-effector wrt base frame # Vectorized 7x7, column-major
+float64[6] O_dP_EE # EE vel computed as J*dq
+float64[6] O_F_EE_d # Tau_J_d transformed to EE space via the zero jacobian
+
 

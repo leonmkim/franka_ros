@@ -263,13 +263,21 @@ void FrankaStateControllerCustom::publishFrankaStates(const ros::Time& time) {
   // add model handle calls
   std::array<double, 7> coriolis = model_handle_->getCoriolis();
   std::array<double, 7> gravity = model_handle_->getGravity();
-  // std::array<double, 49> mass_matrix = model_handle_->getMass();
+  std::array<double, 49> mass_matrix = model_handle_->getMass();
   std::array<double, 42> O_Jac_EE = model_handle_->getZeroJacobian(franka::Frame::kEndEffector);
-  // Eigen::Map<Eigen::Matrix<double, 6, 7>> jacobian(O_Jac_EE.data());
+  Eigen::Map<Eigen::Matrix<double, 6, 7>> jacobian(O_Jac_EE.data());
+  Eigen::Map<Eigen::Matrix<double, 7, 1>> dq(robot_state_.dq.data());
 
   //  jacobian * dq
-  // Eigen::Matrix<double, 6, 1> ee_vel = jacobian * dq;
+  Eigen::Matrix<double, 6, 1> ee_vel = jacobian * dq;
+
+  // jacobian * M^-1 * tau
+  Eigen::Map<Eigen::Matrix<double, 7, 7>> mass_matrix_eig(mass_matrix.data());
+  Eigen::Map<Eigen::Matrix<double, 7, 1>> tau_d(robot_state_.tau_J_d.data());
   
+  Eigen::Matrix<double, 7, 1> M_inv_tau_d = mass_matrix_eig.llt().solve(tau_d); //exploit PD mass matrix by using LLT solve
+  Eigen::Matrix<double, 6, 1> O_F_EE_d = jacobian * M_inv_tau_d;
+
   if (publisher_franka_states_.trylock()) {
     static_assert(
         sizeof(robot_state_.cartesian_collision) == sizeof(robot_state_.cartesian_contact),
@@ -292,6 +300,8 @@ void FrankaStateControllerCustom::publishFrankaStates(const ros::Time& time) {
       publisher_franka_states_.msg_.O_dP_EE_d[i] = robot_state_.O_dP_EE_d[i];
       publisher_franka_states_.msg_.O_dP_EE_c[i] = robot_state_.O_dP_EE_c[i];
       publisher_franka_states_.msg_.O_ddP_EE_c[i] = robot_state_.O_ddP_EE_c[i];
+      publisher_franka_states_.msg_.O_dP_EE[i] = ee_vel(i,0); //add EE velocity
+      publisher_franka_states_.msg_.O_F_EE_d[i] = O_F_EE_d(i,0); //add EE wrench desired
     }
 
     static_assert(sizeof(robot_state_.q) == sizeof(robot_state_.q_d),
@@ -390,6 +400,11 @@ void FrankaStateControllerCustom::publishFrankaStates(const ros::Time& time) {
       publisher_franka_states_.msg_.F_x_Cee[i] = robot_state_.F_x_Cee[i];
       publisher_franka_states_.msg_.F_x_Cload[i] = robot_state_.F_x_Cload[i];
       publisher_franka_states_.msg_.F_x_Ctotal[i] = robot_state_.F_x_Ctotal[i];
+    }
+
+    // add mass matrix
+    for (size_t i = 0; i < mass_matrix.size(); i++) {
+          publisher_franka_states_.msg_.mass_matrix[i] = mass_matrix[i];
     }
 
     // add jacobian

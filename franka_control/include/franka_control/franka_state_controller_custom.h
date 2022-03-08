@@ -16,6 +16,9 @@
 #include <sensor_msgs/JointState.h>
 #include <tf2_msgs/TFMessage.h>
 
+// add eigen library for ee_vel computation
+#include <Eigen/Dense>
+
 namespace franka_control {
 
 /**

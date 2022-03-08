@@ -18,8 +18,10 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   tf2_msgs
   std_srvs
+  # eigen_conversions
 )
 
+find_package(Eigen3 REQUIRED)
 find_package(Franka 0.7.0 REQUIRED)
 
 catkin_package(
@@ -36,6 +38,7 @@ catkin_package(
     sensor_msgs
     tf2_msgs
     std_srvs
+    # eigen_conversions
   DEPENDS Franka
 )
 
@@ -56,6 +59,7 @@ target_link_libraries(franka_state_controller
 
 target_include_directories(franka_state_controller SYSTEM PUBLIC
   ${Franka_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -80,6 +84,7 @@ target_link_libraries(franka_state_controller_custom
 
 target_include_directories(franka_state_controller_custom SYSTEM PUBLIC
   ${Franka_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 target_include_directories(franka_state_controller_custom PUBLIC
