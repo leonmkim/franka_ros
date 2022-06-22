@@ -4,7 +4,7 @@
   <xacro:arg name="arm_id" default="panda" /> <!-- Name of this panda -->
   <xacro:arg name="hand"   default="false" /> <!-- Should a franka_gripper be mounted at the flange?" -->
   <xacro:arg name="gazebo" default="false" /> <!-- Is the robot being simulated in gazebo?" -->
-  <xacro:arg name="peg" default="true"/> <!-- Should a peg be mounted at the flange?" -->
+  <xacro:arg name="sphere" default="false"/> <!-- Should a sphere be mounted at the flange?" -->
 
   <xacro:property name="arm_id" value="$(arg arm_id)" />
 
@@ -18,9 +18,9 @@
       <xacro:hand ns="${arm_id}" rpy="0 0 ${-pi/4}" connected_to="${arm_id}_link8" safety_distance="0.03"/>
     </xacro:if>
 
-    <xacro:if value="$(arg peg)">
-      <xacro:include filename="$(find franka_description)/robots/peg.xacro"/>
-      <xacro:peg ns="${arm_id}" rpy="0 0 ${-pi/4}" connected_to="${arm_id}_link8"/>
+    <xacro:if value="$(arg sphere)">
+      <xacro:include filename="$(find franka_description)/robots/sphere.xacro"/>
+      <xacro:sphere ns="${arm_id}" rpy="0 0 ${-pi/4}" connected_to="${arm_id}_link8"/>
     </xacro:if>
   </xacro:unless>
 
@@ -43,8 +43,8 @@
       <xacro:gazebo-joint joint="${arm_id}_finger_joint2" transmission="hardware_interface/EffortJointInterface" />
     </xacro:if>
 
-    <xacro:if value="$(arg peg)">
-      <xacro:peg ns="${arm_id}" rpy="0 0 ${-pi/4}" connected_to="${arm_id}_link8" />
+    <xacro:if value="$(arg sphere)">
+      <xacro:sphere ns="${arm_id}" rpy="0 0 ${-pi/4}" connected_to="${arm_id}_link8" />
     </xacro:if>
 
 
