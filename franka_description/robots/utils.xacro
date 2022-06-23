@@ -131,7 +131,7 @@
              ixy="0" iyz="0" ixz="0"/>
   </xacro:macro>
 
-  <xacro: macro name="sphere_intertia_def" params="radius mass">
+  <xacro:macro name="sphere_inertia_def" params="radius mass">
     <inertia ixx="${2 * mass * radius * radius / 5}"
              iyy="${2 * mass * radius * radius / 5}"
              izz="${2 * mass * radius * radius / 5}"
