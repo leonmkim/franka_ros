@@ -7,11 +7,13 @@
   <arg name="paused"      default="false" doc="Should the simulation directly be stopped at 0s?" />
   <arg name="world"       default="worlds/empty.world" doc="Filename to a SDF World for gazebo to use" />
   <arg name="rviz"        default="false" doc="Should RVIz be launched?" />
-  <arg name="dyn_reconf"        default="false" doc="Should dynamic reconfigure be launched?" />
+  <arg name="dyn_reconf"  default="false" doc="Should dynamic reconfigure be launched?" />
 
   <!-- Robot Customization -->
   <arg name="arm_id"      default="panda" doc="Name of the panda robot to spawn" />
-  <arg name="use_gripper" default="true"  doc="Should a franka hand be mounted on the flange?" />
+  <arg name="use_gripper" default="false" doc="Should a franka hand be mounted on the flange?" />
+  <arg name="use_peg"     default="false" doc="Should a peg be mounted on the flange?" />
+  <arg name="use_sphere"  default="true"  doc="Should a sphere be mounted on the flange? " />
   <arg name="controller"  default=" "     doc="Which example controller should be started? (One of {cartesian_impedance,model,force}_example_controller)" />
   <arg name="x"           default="0"     doc="How far forward to place the base of the robot in [m]?" />
   <arg name="y"           default="0"     doc="How far leftwards to place the base of the robot in [m]?" />
@@ -39,9 +41,11 @@
 
   <group ns="$(arg arm_id)">
     <param name="robot_description"
-           command="xacro $(find franka_description)/robots/panda_arm.urdf.xacro
+           command="xacro $(find franka_description)/robots/panda_arm_attachments.urdf.xacro
                     gazebo:=true
                     hand:=$(arg use_gripper)
+                    peg:=$(arg use_peg)
+                    sphere:=$(arg use_sphere)
                     arm_id:=$(arg arm_id)
                     xyz:='$(arg x) $(arg y) $(arg z)'
                     rpy:='$(arg roll) $(arg pitch) $(arg yaw)'">
@@ -81,6 +85,20 @@
 
     <node pkg="controller_manager"
           type="spawner"
+          name="$(arg arm_id)_peg_spawner"
+          if="$(arg use_peg)"
+          args="franka_peg"
+    />
+
+    <node pkg="controller_manager"
+          type="spawner"
+          name="$(arg arm_id)_sphere_spawner"
+          if="$(arg use_sphere)"
+          args="franka_sphere"
+    />
+
+    <node pkg="controller_manager"
+          type="spawner"
           name="$(arg arm_id)_controller_spawner"
           respawn="false" output="screen"
           args="franka_state_controller $(arg controller)"
@@ -90,7 +108,7 @@
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
     <node name="joint_state_publisher" type="joint_state_publisher" pkg="joint_state_publisher">
-      <rosparam param="source_list">[franka_state_controller/joint_states, franka_gripper/joint_states] </rosparam>
+      <rosparam param="source_list">[franka_state_controller/joint_states, franka_gripper/joint_states, franka_peg/joint_states, franka_sphere/joint_states] </rosparam>
       <param name="rate" value="30"/>
     </node>
 
