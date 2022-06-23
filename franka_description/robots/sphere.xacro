@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="sphere">
   <!-- utils /-->
-  <xacro:include filename="$(find franka_panda_description)/robots/utils.xacro"/>
+  <xacro:include filename="$(find franka_description)/robots/utils.xacro"/>
 
-  <xacro:macro name="sphere" params="connected_to:='' ns:='' rpy:='0 0 0' xyz:='0 0 0' ">
+  <xacro:macro name="sphere_shape" params="connected_to:='' ns:='' rpy:='0 0 0' xyz:='0 0 0' ">
     
     <xacro:unless value="${connected_to == ''}">
       <joint name="${ns}_sphere_joint" type="fixed">
@@ -42,7 +42,7 @@
     <joint name="${ns}_tip_joint" type="fixed">
         <parent link="${ns}_peg"/>
         <child link="${ns}_tip"/>
-        <origin xyz="0 0 0.555" rpy="0 0 0"/>
+        <origin xyz="0 0 0.111" rpy="0 0 0"/>
     </joint>
     <link name="${ns}_tip">
     </link>
