@@ -19,12 +19,14 @@
           <mesh filename="package://franka_description/meshes/visual/link0.dae"/>
         </geometry>
       </visual>
+      <!--
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
           <mesh filename="package://franka_description/meshes/collision/link0.stl"/>
         </geometry>
       </collision>
+      -->
       <inertial>
         <!-- Estimated guesses from CAD -->
         <origin rpy="0 0 0" xyz="-0.041018 -0.00014 0.049974"/>
@@ -42,12 +44,14 @@
           <mesh filename="package://franka_description/meshes/visual/link1.dae"/>
         </geometry>
       </visual>
+      <!--
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
           <mesh filename="package://franka_description/meshes/collision/link1.stl"/>
         </geometry>
       </collision>
+      -->
       <inertial>
         <origin rpy="0 0 0" xyz="0.003875 0.002081 -0.04762"/>
         <mass value="4.970684"/>
@@ -74,12 +78,14 @@
           <mesh filename="package://franka_description/meshes/visual/link2.dae"/>
         </geometry>
       </visual>
+      <!--
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
           <mesh filename="package://franka_description/meshes/collision/link2.stl"/>
         </geometry>
       </collision>
+      -->
       <inertial>
         <origin rpy="0 0 0" xyz=" -0.003141 -0.02872  0.003495"/>
         <mass value="0.646926"/>
@@ -106,12 +112,14 @@
           <mesh filename="package://franka_description/meshes/visual/link3.dae"/>
         </geometry>
       </visual>
+      <!--
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
           <mesh filename="package://franka_description/meshes/collision/link3.stl"/>
         </geometry>
       </collision>
+      -->
       <inertial>
         <origin rpy="0 0 0" xyz="2.7518e-02 3.9252e-02 -6.6502e-02"/>
         <mass value="3.228604"/>
@@ -138,12 +146,14 @@
           <mesh filename="package://franka_description/meshes/visual/link4.dae"/>
         </geometry>
       </visual>
+      <!--
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
           <mesh filename="package://franka_description/meshes/collision/link4.stl"/>
         </geometry>
       </collision>
+      -->
       <inertial>
         <origin rpy="0 0 0" xyz="-5.317e-02 1.04419e-01 2.7454e-02"/>
         <mass value="3.587895"/>
@@ -170,12 +180,14 @@
           <mesh filename="package://franka_description/meshes/visual/link5.dae"/>
         </geometry>
       </visual>
+      <!--
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
           <mesh filename="package://franka_description/meshes/collision/link5.stl"/>
         </geometry>
       </collision>
+      -->
       <inertial>
         <origin rpy="0 0 0" xyz="-1.1953e-02 4.1065e-02 -3.8437e-02"/>
         <mass value="1.225946"/>
@@ -202,12 +214,14 @@
           <mesh filename="package://franka_description/meshes/visual/link6.dae"/>
         </geometry>
       </visual>
+      <!--
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
           <mesh filename="package://franka_description/meshes/collision/link6.stl"/>
         </geometry>
       </collision>
+      -->
       <inertial>
         <origin rpy="0 0 0" xyz="6.0149e-02 -1.4117e-02 -1.0517e-02"/>
         <mass value="1.666555"/>
@@ -234,12 +248,14 @@
           <mesh filename="package://franka_description/meshes/visual/link7.dae"/>
         </geometry>
       </visual>
+      <!--
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
           <mesh filename="package://franka_description/meshes/collision/link7.stl"/>
         </geometry>
       </collision>
+      -->
       <inertial>
         <origin rpy="0 0 0" xyz="1.0517e-02 -4.252e-03 6.1597e-02"/>
         <mass value="7.35522e-01"/>
