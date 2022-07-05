@@ -553,8 +553,7 @@ void FrankaHW::initRobot() {
   update(robot_->readOnce());
 }
 
-void FrankaHW::setupParamete<(std::ostream& ostream, ControlMode mode) {
-  if rCallbacks(ros::NodeHandle& robot_hw_nh) {
+void FrankaHW::setupParameterCallbacks(ros::NodeHandle& robot_hw_nh) {
   get_limit_rate_ = [robot_hw_nh]() {
     bool rate_limiting;
     robot_hw_nh.getParamCached("rate_limiting", rate_limiting);
