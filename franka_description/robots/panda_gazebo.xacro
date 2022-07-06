@@ -34,7 +34,15 @@
                                                 izz="0.004285" />
       </inertial>
     </link>
-
+    <gazebo reference="${arm_id}_link0">
+      <collision>
+        <surface>
+          <contact>
+            <collide_bitmask>0x0</collide_bitmask>
+          </contact>
+        </surface>
+      </collision>
+    </gazebo>
     <link name="${arm_id}_link1">
       <visual>
         <origin rpy="0 0 0" xyz="0 0 0"/>
