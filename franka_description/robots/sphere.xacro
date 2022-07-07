@@ -3,7 +3,7 @@
   <!-- utils /-->
   <xacro:include filename="$(find franka_description)/robots/utils.xacro"/>
 
-  <xacro:macro name="sphere_shape" params="connected_to:='' ns:='' rpy:='0 0 0' xyz:='0 0 0' ">
+  <xacro:macro name="sphere_shape" params="connected_to:='' ns:='' rpy:='0 0 0' xyz:='0 0 0' radius='' ">
     
     <xacro:unless value="${connected_to == ''}">
       <joint name="${ns}_sphere_joint" type="fixed">
@@ -13,7 +13,7 @@
       </joint>
     </xacro:unless>
     
-    <xacro:property name="radius" value="0.0555625" />
+    <xacro:property name="radius" value="${radius}" />
     <xacro:property name="mass" value="0.23" />
     
     <link name="${ns}_sphere">
@@ -38,11 +38,11 @@
       	<sphere_inertia_def radius="${radius}" mass="${mass}"/>
       </inertial>
 	  </link>
-    <!-- add a dummy link to the tip of the peg for rviz/kdl purposes -->
+    <!-- add a dummy link to the tip of the sphere for rviz/kdl purposes -->
     <joint name="${ns}_tip_joint" type="fixed">
         <parent link="${ns}_sphere"/>
         <child link="${ns}_tip"/>
-        <origin xyz="0 0 0.555" rpy="0 0 0"/>
+        <origin xyz="0 0 ${radius}" rpy="0 0 0"/>
     </joint>
     <link name="${ns}_tip">
     </link>

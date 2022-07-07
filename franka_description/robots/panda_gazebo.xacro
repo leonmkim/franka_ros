@@ -440,7 +440,7 @@
 
   </xacro:macro>
 
-   <xacro:macro name="sphere_shape" params="connected_to:='' ns:='' rpy:='0 0 0' xyz:='0 0 0' ">
+   <xacro:macro name="sphere_shape" params="connected_to:='' ns:='' rpy:='0 0 0' xyz:='0 0 0' radius:='' mu='' ">
     
     <xacro:unless value="${connected_to == ''}">
       <joint name="${ns}_sphere_joint" type="fixed">
@@ -450,7 +450,7 @@
       </joint>
     </xacro:unless>
     
-    <xacro:property name="radius" value="0.0555625" />
+
     <xacro:property name="mass" value="0.23" />
     
     <link name="${ns}_sphere">
@@ -477,8 +477,8 @@
 	  </link>
 
     <gazebo reference="${ns}_sphere">
-      <mu1>0.2</mu1>
-      <mu2>0.2</mu2>
+      <mu1 value="${mu}" />
+      <mu2 value="${mu}" />
     </gazebo>
     
     <!-- add a dummy link to the tip of the peg for rviz/kdl purposes -->
