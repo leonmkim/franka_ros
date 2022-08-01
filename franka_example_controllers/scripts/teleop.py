@@ -62,7 +62,7 @@ if __name__ == "__main__":
         rospy.sleep(1)
     state_sub.unregister()
     
-    joy_sub = rospy.Subscriber("joy", Joy, joy_callback)                             
+    joy_sub = rospy.Subscriber("/joy", Joy, joy_callback)                             
 
     pose_pub = rospy.Publisher(
     "equilibrium_pose", PoseStamped, queue_size=10)
@@ -71,8 +71,5 @@ if __name__ == "__main__":
     # run pose publisher
     rospy.Timer(rospy.Duration(0.005),
                 lambda msg: publisherCallback(msg, link_name))
-
-  
-
 
     rospy.spin()
