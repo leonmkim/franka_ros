@@ -51,13 +51,21 @@ def joy_callback(msg):
 
 if __name__ == "__main__":
     rospy.init_node("joy_pose_node")
-    pose_pub = rospy.Publisher(
-        "equilibrium_pose", PoseStamped, queue_size=10)
+
     state_sub = rospy.Subscriber("franka_state_controller/franka_states",
                                  FrankaState, franka_state_callback)
-    joy_sub = rospy.Subscriber("joy", Joy, joy_callback)                             
     listener = tf.TransformListener()
     link_name = rospy.get_param("~link_name")
+    
+    # Get initial pose for the interactive marker
+    while not initial_pose_found:
+        rospy.sleep(1)
+    state_sub.unregister()
+    
+    joy_sub = rospy.Subscriber("joy", Joy, joy_callback)                             
+
+    pose_pub = rospy.Publisher(
+    "equilibrium_pose", PoseStamped, queue_size=10)
 
     
     # run pose publisher
