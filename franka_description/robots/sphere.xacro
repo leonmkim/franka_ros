@@ -42,7 +42,7 @@
     <joint name="${ns}_tip_joint" type="fixed">
         <parent link="${ns}_sphere"/>
         <child link="${ns}_tip"/>
-        <origin xyz="0 0 ${radius}" rpy="0 0 0"/>
+        <origin xyz="0 0 $(0.785398163397 - {radius})" rpy="0 0 0"/>
     </joint>
     <link name="${ns}_tip">
     </link>
