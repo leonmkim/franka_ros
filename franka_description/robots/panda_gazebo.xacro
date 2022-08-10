@@ -471,6 +471,8 @@
     <gazebo reference="${ns}_sphere">
       <mu1 value="${mu}" />
       <mu2 value="${mu}" />
+      <kp>1e5</kp>
+      <kd>1e1</kd>
     </gazebo>
     
     <!-- add a dummy link to the tip of the peg for rviz/kdl purposes -->
