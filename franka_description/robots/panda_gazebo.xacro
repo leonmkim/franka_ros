@@ -224,6 +224,15 @@
                                                    izz="5.4330e-03" />
       </inertial>
     </link>
+    <gazebo reference="${arm_id}_link6">
+      <collision>
+        <surface>
+          <contact>
+            <collide_bitmask>0x001</collide_bitmask>
+          </contact>
+        </surface>
+      </collision>
+    </gazebo>
 
     <joint name="${arm_id}_joint6" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-0.0175" soft_upper_limit="3.7525"/>
@@ -256,6 +265,15 @@
                                                     izz="4.8150e-03"/>
       </inertial>
     </link>
+    <gazebo reference="${arm_id}_link7">
+      <collision>
+        <surface>
+          <contact>
+            <collide_bitmask>0x01</collide_bitmask>
+          </contact>
+        </surface>
+      </collision>
+    </gazebo>
 
     <joint name="${arm_id}_joint7" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8973" soft_upper_limit="2.8973"/>
@@ -471,7 +489,8 @@
     <gazebo reference="${ns}_sphere">
       <mu1 value="${mu}" />
       <mu2 value="${mu}" />
-      <kp>1e5</kp>
+      <!-- previously 1e5 -->
+      <kp>1e4</kp>  
       <kd>1e1</kd>
     </gazebo>
     

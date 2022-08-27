@@ -147,7 +147,8 @@ bool FrankaStateControllerCustom::init(hardware_interface::RobotHW* robot_hardwa
     ROS_ERROR("FrankaStateControllerCustom: Could not get parameter arm_id");
     return false;
   }
-  double publish_rate(30.0);
+  // 30.0
+  double publish_rate(1000.0); 
   if (!controller_node_handle.getParam("publish_rate", publish_rate)) {
     ROS_INFO_STREAM("FrankaStateControllerCustom: Did not find publish_rate. Using default "
                     << publish_rate << " [Hz].");
