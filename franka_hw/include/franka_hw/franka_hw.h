@@ -354,7 +354,7 @@ class FrankaHW : public hardware_interface::RobotHW {
    * @param[out] limit_interface The limit interface to set up.
    * @param[out] command_interface The command interface to hook the limit interface to.
    */
-  template <typename T>
+  template <typename T> // add nodehandle to the argument here
   void setupLimitInterface(const ros::NodeHandle& nh, joint_limits_interface::JointLimitsInterface<T>& limit_interface,
                            hardware_interface::JointCommandInterface& command_interface) {
     joint_limits_interface::SoftJointLimits soft_limits;
