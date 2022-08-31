@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
 
     // service for e-stop
     services->advertiseService<franka_msgs::TriggerError>( // trigger error service for killing control
-          node_handle, "/franka_control/trigger_error",
+          node_handle, "/panda/franka_control/trigger_error",
           [&has_error](auto&& req, auto&& res) {
             ROS_INFO("has_error switched to %d", req.has_error);
             has_error = req.has_error; });
