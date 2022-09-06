@@ -23,7 +23,10 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 find_package(Eigen3 REQUIRED)
-find_package(Franka 0.7.0 REQUIRED)
+find_package(Franka 0.9.0 QUIET)
+if(NOT Franka_FOUND)
+  find_package(Franka 0.8.0 REQUIRED)
+endif()
 
 add_message_files(FILES
   JointTorqueComparison.msg
@@ -151,4 +154,12 @@ if(CLANG_TOOLS)
     FILES ${SOURCES}
     DEPENDS franka_example_controllers
   )
+endif()
+
+include(${CMAKE_CURRENT_LIST_DIR}/../cmake/PepTools.cmake OPTIONAL
+  RESULT_VARIABLE PEP_TOOLS
+)
+if(PEP_TOOLS)
+  file(GLOB_RECURSE PYSOURCES ${CMAKE_CURRENT_SOURCE_DIR}/scripts/*.py)
+  add_pyformat_target(franka_control FILES ${PYSOURCES})
 endif()

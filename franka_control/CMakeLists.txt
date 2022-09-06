@@ -22,7 +22,10 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 find_package(Eigen3 REQUIRED)
-find_package(Franka 0.7.0 REQUIRED)
+find_package(Franka 0.9.0 QUIET)
+if(NOT Franka_FOUND)
+  find_package(Franka 0.8.0 REQUIRED)
+endif()
 
 catkin_package(
   INCLUDE_DIRS include
@@ -46,7 +49,9 @@ catkin_package(
 add_library(franka_state_controller
   src/franka_state_controller.cpp
 )
-
+if (Franka_VERSION GREATER_EQUAL 0.9)
+    target_compile_definitions(franka_state_controller PUBLIC ENABLE_BASE_ACCELERATION)
+endif()
 add_dependencies(franka_state_controller
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
   ${catkin_EXPORTED_TARGETS}
