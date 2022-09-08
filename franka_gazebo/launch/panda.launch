@@ -12,9 +12,7 @@
   <!-- Robot Customization -->
   <arg name="arm_id"      default="panda" doc="Name of the panda robot to spawn" />
   <arg name="use_gripper" default="false" doc="Should a franka hand be mounted on the flange?" />
-  <arg name="use_peg"     default="false" doc="Should a peg be mounted on the flange?" />
-  <arg name="use_sphere"  default="true"  doc="Should a sphere be mounted on the flange? " />
-  <arg name="controller"  default=" "     doc="Which example controller should be started? (One of {cartesian_impedance,model,force}_example_controller)" />
+  <arg name="controller"  default="joint_position_hold_controller"     doc="Which example controller should be started? (One of {cartesian_impedance,model,force}_example_controller)" />
   <arg name="x"           default="0"     doc="How far forward to place the base of the robot in [m]?" />
   <arg name="y"           default="0"     doc="How far leftwards to place the base of the robot in [m]?" />
   <arg name="z"           default="0"     doc="How far upwards to place the base of the robot in [m]?" />
@@ -43,11 +41,9 @@
   </include>
 
   <param name="robot_description"
-          command="xacro $(find franka_description)/robots/panda_arm_attachments.urdf.xacro
+          command="xacro $(find franka_description)/robots/panda_arm.urdf.xacro
                   gazebo:=true
                   hand:=$(arg use_gripper)
-                  peg:=$(arg use_peg)
-                  sphere:=$(arg use_sphere)
                   arm_id:=$(arg arm_id)
                   xyz:='$(arg x) $(arg y) $(arg z)'
                   rpy:='$(arg roll) $(arg pitch) $(arg yaw)'">
@@ -75,7 +71,7 @@
         respawn="false"
   />
 
-  <node pkg="controller_manager"
+  <!-- <node pkg="controller_manager"
         type="spawner"
         name="$(arg arm_id)_peg_spawner"
         if="$(arg use_peg)"
@@ -87,7 +83,7 @@
         name="$(arg arm_id)_sphere_spawner"
         if="$(arg use_sphere)"
         args="franka_sphere"
-  />
+  /> -->
 
   <remap to="cartesian_impedance_example_controller/equilibrium_pose" from="equilibrium_pose" />
 

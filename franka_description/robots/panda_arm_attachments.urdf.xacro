@@ -7,6 +7,7 @@
   <xacro:arg      name="radius"       default="1.0"   /> <!-- How large should the sphere be in [m]? -->
   <xacro:arg      name="mu"           default="0.2"   /> <!-- What is the coefficient of friction? -->
   <xacro:arg      name="real_env"           default="false"   /> <!-- What is the coefficient of friction? -->
+  
   <xacro:property name="arm_id"       value="$(arg arm_id)" />
   <xacro:property name="end_effector"   value="$(arg end_effector)" />
   <xacro:property name="real_env"   value="$(arg real_env)" />
@@ -72,6 +73,22 @@
       <child  link="${arm_id}_link0" />
     </joint>
 
+
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint1" transmission="hardware_interface/PositionJointInterface" />
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint2" transmission="hardware_interface/PositionJointInterface" />
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint3" transmission="hardware_interface/PositionJointInterface" />
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint4" transmission="hardware_interface/PositionJointInterface" />
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint5" transmission="hardware_interface/PositionJointInterface" />
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint6" transmission="hardware_interface/PositionJointInterface" />
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint7" transmission="hardware_interface/PositionJointInterface" />
+
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint1" transmission="hardware_interface/VelocityJointInterface" />
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint2" transmission="hardware_interface/VelocityJointInterface" />
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint3" transmission="hardware_interface/VelocityJointInterface" />
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint4" transmission="hardware_interface/VelocityJointInterface" />
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint5" transmission="hardware_interface/VelocityJointInterface" />
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint6" transmission="hardware_interface/VelocityJointInterface" />
+    <xacro:gazebo-joint joint="$(arg arm_id)_joint7" transmission="hardware_interface/VelocityJointInterface" />
 
     <xacro:gazebo-joint joint="${arm_id}_joint1" transmission="hardware_interface/EffortJointInterface" />
     <xacro:gazebo-joint joint="${arm_id}_joint2" transmission="hardware_interface/EffortJointInterface" />
