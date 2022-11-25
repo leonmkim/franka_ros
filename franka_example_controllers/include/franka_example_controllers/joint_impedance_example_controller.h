@@ -12,11 +12,14 @@
 #include <realtime_tools/realtime_publisher.h>
 #include <ros/node_handle.h>
 #include <ros/time.h>
+#include <Eigen/Dense>
 
 #include <franka_example_controllers/JointTorqueComparison.h>
 #include <franka_hw/franka_cartesian_command_interface.h>
 #include <franka_hw/franka_model_interface.h>
 #include <franka_hw/trigger_rate.h>
+
+#include <franka_controllers/ControllerDiag.h>
 
 namespace franka_example_controllers {
 
@@ -52,9 +55,18 @@ class JointImpedanceExampleController : public controller_interface::MultiInterf
   std::array<double, 7> dq_filtered_;
   std::array<double, 16> initial_pose_;
 
+
   franka_hw::TriggerRate rate_trigger_{1.0};
   std::array<double, 7> last_tau_d_{};
   realtime_tools::RealtimePublisher<JointTorqueComparison> torques_publisher_;
+  
+  // diagnostic stuff
+  franka_controllers::ControllerDiag diag_msg_;
+  ros::Publisher pub_diagnostic_;
+  Eigen::Matrix<double, 7, 1> tau_total_;
+
+  void diagnosticCallback();
+
 };
 
 }  // namespace franka_example_controllers

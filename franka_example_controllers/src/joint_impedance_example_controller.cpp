@@ -122,6 +122,10 @@ bool JointImpedanceExampleController::init(hardware_interface::RobotHW* robot_hw
   }
   torques_publisher_.init(node_handle, "torque_comparison", 1);
 
+  // controller diagnostic publisher
+
+  pub_diagnostic_ = node_handle.advertise<franka_controllers::ControllerDiag>("control_diagnostic", 20);
+
   std::fill(dq_filtered_.begin(), dq_filtered_.end(), 0);
 
   return true;
@@ -171,6 +175,8 @@ void JointImpedanceExampleController::update(const ros::Time& /*time*/,
   // 1000 * (1 / sampling_time).
   std::array<double, 7> tau_d_saturated = saturateTorqueRate(tau_d_calculated, robot_state.tau_J_d);
 
+  tau_total_ = Eigen::Map<Eigen::Matrix<double, 7, 1>>(tau_d_saturated.data());
+
   for (size_t i = 0; i < 7; ++i) {
     joint_handles_[i].setCommand(tau_d_saturated[i]);
   }
@@ -191,10 +197,13 @@ void JointImpedanceExampleController::update(const ros::Time& /*time*/,
     }
     torques_publisher_.unlockAndPublish();
   }
-
+  
   for (size_t i = 0; i < 7; ++i) {
     last_tau_d_[i] = tau_d_saturated[i] + gravity[i];
   }
+  
+  // publish diagnostic message
+  diagnosticCallback();
 }
 
 std::array<double, 7> JointImpedanceExampleController::saturateTorqueRate(
@@ -207,6 +216,17 @@ std::array<double, 7> JointImpedanceExampleController::saturateTorqueRate(
   }
   return tau_d_saturated;
 }
+void JointImpedanceExampleController::diagnosticCallback() {
+  //tau_tot
+  boost::array<double, 7> tau_tot;
+  Eigen::VectorXd::Map(&tau_tot[0], tau_total_.size()) = tau_total_;
+  diag_msg_.tau_tot = tau_tot;
+
+  diag_msg_.header.stamp = ros::Time::now();
+  pub_diagnostic_.publish(diag_msg_);
+}
+
+
 
 }  // namespace franka_example_controllers
 

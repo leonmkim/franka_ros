@@ -92,12 +92,14 @@
         type="delayed_controller_spawner.py"
         name="$(arg arm_id)_controller_spawner"
         respawn="false" output="screen"
-        args="franka_state_controller $(arg controller)"
+        args="franka_state_controller_custom $(arg controller)"
   />
+        <!-- args="franka_state_controller $(arg controller)" -->
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
   <node name="joint_state_publisher" type="joint_state_publisher" pkg="joint_state_publisher">
-    <rosparam param="source_list">[franka_state_controller/joint_states, franka_gripper/joint_states] </rosparam>
+    <!-- <rosparam param="source_list">[franka_state_controller/joint_states, franka_gripper/joint_states] </rosparam> -->
+    <rosparam param="source_list">[franka_state_controller_custom/joint_states, franka_gripper/joint_states] </rosparam>
     <param name="rate" value="30"/>
   </node>
 

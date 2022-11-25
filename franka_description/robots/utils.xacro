@@ -50,6 +50,18 @@
       </collision>
     </gazebo>
   </xacro:macro>
+  
+  <xacro:macro name="gazebo-coll-bitmask" params="link bitmask">
+    <gazebo reference="${link}">
+      <collision>
+        <surface>
+          <contact>
+            <collide_bitmask>${bitmask}</collide_bitmask>
+          </contact>
+        </surface>
+      </collision>
+    </gazebo>
+  </xacro:macro>
 
   <!-- ========================================================== -->
   <!-- Adds the required tags to provide a `FrankaStateInterface` -->
@@ -117,9 +129,9 @@
 
   <!-- Little helper macro to define the inertia matrix needed for links. -->
   <xacro:macro name="cuboid_inertia_def" params="width height length mass">
-    <inertia ixx="${mass * (height * height + length * length) / 12}"
-             iyy="${mass * (width * width + length * length) / 12}"
-             izz="${mass * (width * width + height * height) / 12}"
+    <inertia ixx="${mass * (height * height + width * width) / 12}"
+             iyy="${mass * (height * height + length * length) / 12}"
+             izz="${mass * (width * width + length * length) / 12}"
              ixy="0" iyz="0" ixz="0"/>
   </xacro:macro>
 

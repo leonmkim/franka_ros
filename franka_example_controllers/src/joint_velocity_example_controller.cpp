@@ -76,8 +76,8 @@ void JointVelocityExampleController::update(const ros::Time& /* time */,
                                             const ros::Duration& period) {
   elapsed_time_ += period;
 
-  ros::Duration time_max(8.0);
-  double omega_max = 0.1;
+  ros::Duration time_max(1.5);
+  double omega_max = 0.3;
   double cycle = std::floor(
       std::pow(-1.0, (elapsed_time_.toSec() - std::fmod(elapsed_time_.toSec(), time_max.toSec())) /
                          time_max.toSec()));
