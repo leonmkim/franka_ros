@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+<launch>
+    <arg name="bag_path_name"  default='/hdd_storage/leon_stuff/rosbags/test'/>
+    <!-- Use an internal buffer of SIZE MB (Default: 256, 0 = infinite). 
+    This is the message queue of the recorder object, 
+    before messages are being passed on to the bag. 
+    Lowering this value might result in messages being dropped before they reach the recording process. -->
+    <arg name="buffer_size" default='0'/> 
+
+    <arg name="compress_bz2" default='false'/>
+    <arg name="compress_lz4" default='false'/>
+
+    <!-- <arg name="file_path" default="datasets/rosbags" /> -->
+    
+    <node name="pub_text" pkg="rostopic" type="rostopic"
+        args="pub /msg std_msgs/String '$(arg bag_path_name)'"
+        output="screen" />
+    <node name="print_text" pkg="rostopic" type="rostopic" args="echo /msg" output="screen" />
+
+    
+    <!-- boolean arguments -->
+    <!-- <arg name="bag_video" default="true" /> -->
+    <!-- <arg name="simulated" default="false" /> -->
+    <!-- <arg name="bag_tf" default="true" /> -->
+    
+    <!-- launch the realsense camera if bagging video -->
+    <!-- <group if="$(eval arg('bag_video') == true)">
+        <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+            <arg name="color_height" value="360" />
+            <arg name="color_width" value="640" />
+            <arg name="color_fps" value="30" />
+            <arg name="enable_depth" value="false" /> only stream color images  -->
+
+        <!-- </include>
+    </group>    -->
+
+    
+    <!-- desired pose from the marker: /basic_control/feedback -->
+    <!-- CI commands come from  /panda_simulator/motion_controller/arm/joint_commands -->
+    <!-- CI control listens to state from /panda_simulator/custom_franka_state_controller/joint_states, robot_state, and tip_state -->
+    <!-- camera images come from /camera/color/image_raw -->
+
+    <!-- FOR FRANKA_ROS -->
+    <arg name="state_controller" value="/franka_state_controller" />
+    <!-- <arg name="my_controller" value="/cartesian_impedance_example_controller" />
+    <arg name="setpoint_topic" value="/equilibrium_pose" /> -->
+
+    <!-- set command arguments -->
+    <arg unless="$(arg compress_bz2)" name="command_arg1" value=""/>
+    <arg     if="$(arg compress_bz2)" name="command_arg1" value="--bz2"/>
+    <arg unless="$(arg compress_lz4)" name="command_arg2" value=""/>
+    <arg     if="$(arg compress_lz4)" name="command_arg2" value="--lz4"/>
+
+    <node pkg="rosbag" type="record" name="rosbag_record"
+        args="-o $(arg bag_path_name)
+        -b $(arg buffer_size) 
+        $(arg command_arg1)
+        $(arg command_arg2)
+        $(arg state_controller)/franka_states
+        /tf /tf_static
+    "/>  
+    
+        <!-- /contact_time_throttled -->
+        <!-- /panda/joint_states -->
+        <!-- /screwing_primitives/pose_desired -->
+        <!-- /camera/depth/color/points  -->
+        
+    <!-- <node pkg="rosbag" type="record" name="rosbag_record"
+        args="-o /home/serialexperimentsleon/datasets/screwing/test/a
+        $(arg state_controller)/franka_states
+    "/>  
+     -->
+        <!-- $(arg my_controller)$(arg setpoint_topic) 
+        /tf /tf_static
+        /camera/color/image_raw"/>    -->
+
+</launch>
+

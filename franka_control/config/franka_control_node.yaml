@@ -99,7 +99,7 @@ joint_limits:
     has_jerk_limits: true
     max_jerk: 10000.0
     has_effort_limits: true
-    max_effort: 7.5 #12.0
+    max_effort: 12.0 #12.0
   panda_joint7:
     has_position_limits: true
     min_position: -2.8973
@@ -111,4 +111,4 @@ joint_limits:
     has_jerk_limits: true
     max_jerk: 10000.0
     has_effort_limits: true
-    max_effort: 2.0 #12.0
+    max_effort: 12.0 #12.0
