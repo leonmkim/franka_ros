@@ -73,7 +73,8 @@
       <child link="${arm_id}_link1"/>
       <axis xyz="0 0 1"/>
       <limit acceleration="15" lower="-2.9671" effort="87" upper="2.9671" velocity="2.5"/>
-      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.32" friction="1.045"/>
     </joint>
 
     <link name="${arm_id}_link2">
@@ -105,7 +106,8 @@
       <child link="${arm_id}_link2"/>
       <axis xyz="0 0 1"/>
       <limit acceleration="7.5" lower="-1.8326" effort="87" upper="1.8326" velocity="2.5"/>
-      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.392" friction="0.992"/>
     </joint>
 
     <link name="${arm_id}_link3">
@@ -137,7 +139,8 @@
       <child link="${arm_id}_link3"/>
       <axis xyz="0 0 1"/>
       <limit acceleration="12.5" lower="-2.9671" effort="87" upper="2.9671" velocity="2.5"/>
-      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.457" friction="0.994"/>
     </joint>
 
     <link name="${arm_id}_link4">
@@ -169,7 +172,8 @@
       <child link="${arm_id}_link4"/>
       <axis xyz="0 0 1"/>
       <limit acceleration="12.5" lower="-3.1416" effort="87" upper="-0.4" velocity="2.5"/>
-      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.189" friction="0.677"/>
     </joint>
 
     <link name="${arm_id}_link5">
@@ -201,7 +205,8 @@
       <child link="${arm_id}_link5"/>
       <axis xyz="0 0 1"/>
       <limit acceleration="15" lower="-2.9671" effort="12" upper="2.9671" velocity="3"/>
-      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.077" friction="0.732"/>
     </joint>
 
     <link name="${arm_id}_link6">
@@ -234,7 +239,8 @@
       <child link="${arm_id}_link6"/>
       <axis xyz="0 0 1"/>
       <limit acceleration="20" lower="-0.0873" effort="12" upper="3.8223" velocity="3"/>
-      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.03" friction="0.428"/>
     </joint>
 
     <link name="${arm_id}_link7">
@@ -267,7 +273,8 @@
       <child link="${arm_id}_link7"/>
       <axis xyz="0 0 1"/>
       <limit acceleration="20" lower="-2.9671" effort="12" upper="2.9671" velocity="3"/>
-      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.06" friction="0.54"/>
     </joint>
 
     <link name="${arm_id}_link8" />

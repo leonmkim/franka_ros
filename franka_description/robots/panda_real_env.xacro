@@ -82,6 +82,17 @@
       <!-- lowered the table since Franka table is a bit lower as well (offset by -0.0301)-->
       <origin xyz="${panda_origin_to_table_centroid_offset} 0 -${board_height}"/>  <!-- -0.07450000000000001 z offset--> <!-- -0.05 + table_offset-->
     </joint>
+    <gazebo reference="table">
+      <mu1>0.35</mu1>
+      <mu2>0.35</mu2>
+      <collision>
+        <surface>
+          <contact>
+            <collide_bitmask>0x10</collide_bitmask>
+          </contact>
+        </surface>
+      </collision>
+    </gazebo>
 
   </xacro:macro>
 
