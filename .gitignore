@@ -1,0 +1,5 @@
+# ignore the settings.json file
+settings.json
+
+# ignore things in the .history folder
+.history
