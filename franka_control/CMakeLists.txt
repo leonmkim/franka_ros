@@ -19,7 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_msgs
   std_srvs
 )
-
+find_package(Eigen3 REQUIRED)
 find_package(Franka 0.9.0 QUIET)
 if(NOT Franka_FOUND)
   find_package(Franka 0.8.0 REQUIRED)
@@ -67,6 +67,31 @@ target_include_directories(franka_state_controller PUBLIC
   include
 )
 
+## franka_state_controller_custom
+add_library(franka_state_controller_custom
+  src/franka_state_controller.cpp
+)
+if (Franka_VERSION GREATER_EQUAL 0.9)
+    target_compile_definitions(franka_state_controller_custom PUBLIC ENABLE_BASE_ACCELERATION)
+endif()
+add_dependencies(franka_state_controller_custom
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+  ${catkin_EXPORTED_TARGETS}
+)
+
+target_link_libraries(franka_state_controller_custom
+  ${Franka_LIBRARIES}
+  ${catkin_LIBRARIES}
+)
+
+target_include_directories(franka_state_controller_custom SYSTEM PUBLIC
+  ${Franka_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS}
+)
+target_include_directories(franka_state_controller_custom PUBLIC
+  include
+)
+
 ## franka_control_node
 add_executable(franka_control_node
   src/franka_control_node.cpp
@@ -106,6 +131,7 @@ target_include_directories(franka_combined_control_node SYSTEM PUBLIC
 
 ## Installation
 install(TARGETS franka_state_controller
+                franka_state_controller_custom
                 franka_control_node
                 franka_combined_control_node
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
@@ -138,6 +164,6 @@ if(CLANG_TOOLS)
   add_format_target(franka_control FILES ${SOURCES} ${HEADERS})
   add_tidy_target(franka_control
     FILES ${SOURCES}
-    DEPENDS franka_control_node franka_combined_control_node franka_state_controller
+    DEPENDS franka_control_node franka_combined_control_node franka_state_controller franka_state_controller_custom
   )
 endif()

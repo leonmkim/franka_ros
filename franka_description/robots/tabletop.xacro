@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+
+  <!-- =============================================================== -->
+  <!-- || This file does not contain official inertial properties   || -->
+  <!-- || of panda robot. The values are from the identification    || -->
+  <!-- || results published in: Identification of the Franka Emika  || -->
+  <!-- || PandaRobot With Retrieval of Feasible Parameters Using    || -->
+  <!-- || Penalty-Based Optimization                                || -->
+  <!-- || by: Claudio Gaz, Marco Cognetti, Alexander Oliva,         || -->
+  <!-- || Paolo Robuffo Giordano, Alessandro de Lucaa               || -->
+  <!-- =============================================================== -->
+  <!-- 6 ft long: 1.8288 m  -->
+  <!-- 3 ft wide: 0.9144 m  -->
+  <xacro:property name="table_length" value="1.8288" /> 
+  <xacro:property name="table_width" value="0.9144" /> 
+  <xacro:property name="table_height" value="0.1" /> 
+
+  <!-- lump the metal and wood board together -->
+  <xacro:property name="board_length" value="0.3048" /> 
+  <xacro:property name="board_height" value="0.0285" /> 
+
+  <xacro:property name="panda_origin_to_table_centroid_offset" value="0.6244" /> 
+  <xacro:property name="panda_origin_to_board_centroid_offset" value="0.0786" /> 
+
+  <xacro:macro name="tabletop" params="">
+    <link name="mount_plate">
+      <gazebo>
+		    <static>true</static>
+	    </gazebo>
+      <visual>
+        <origin xyz="0 0 -${board_height/2}" />
+        <geometry>
+          <box size="${board_length} ${table_width} ${board_height}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 -${board_height/2}" />
+        <geometry>
+          <box size="${board_length} ${table_width} ${board_height}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 -${board_height/2}" />
+        <mass value="1"/>
+        <!-- Inertia values were calculated to be consistent with the mass and
+            geometry size, assuming a uniform density. -->
+        <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+      </inertial>
+    </link>
+    <joint name="base_to_mount" type="fixed">
+      <parent link="panda_link0"/>
+      <child link="mount_plate"/>
+      <origin xyz="-${panda_origin_to_board_centroid_offset} 0 0"/>
+    </joint>
+
+    <link name="table">
+      <gazebo>
+		    <static>true</static>
+	    </gazebo>
+      <inertial>
+        <origin xyz="0 0 -${table_height/2}" />
+        <mass value="1"/>
+        <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 -${table_height/2}" />
+        <geometry>
+          <box size="${table_length} ${table_width} ${table_height}"/> 
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 -${table_height/2}" />
+        <geometry>
+          <box size="${table_length} ${table_width} ${table_height}"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="base_to_table" type="fixed">
+      <parent link="panda_link0"/>
+      <child link="table"/>
+      <!-- lowered the table since Franka table is a bit lower as well (offset by -0.0301)-->
+      <origin xyz="${panda_origin_to_table_centroid_offset} 0 -${board_height}"/>  <!-- -0.07450000000000001 z offset--> <!-- -0.05 + table_offset-->
+    </joint>
+    <gazebo reference="table">
+      <mu1>0.35</mu1>
+      <mu2>0.35</mu2>
+      <collision>
+        <surface>
+          <contact>
+            <collide_bitmask>0x10</collide_bitmask>
+          </contact>
+        </surface>
+      </collision>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>
