@@ -34,7 +34,7 @@
     <xacro:panda_arm arm_id="$(arg arm_id)" />
 
     <xacro:if value="$(arg tabletop)">
-        <xacro:tabletop/>
+      <xacro:tabletop/>
     </xacro:if>
 
     <xacro:if value="$(arg hand)">
@@ -83,9 +83,9 @@
 
     <gazebo>
       <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-        <robotNamespace>${arm_id}</robotNamespace> <!-- I added this for some reason... Don't remember why-->
         <controlPeriod>0.001</controlPeriod>
         <robotSimType>franka_gazebo/FrankaHWSim</robotSimType>
+        <!-- <robotNamespace>${arm_id}</robotNamespace> < I added this for some reason... Don't remember why> -->
       </plugin>
       <self_collide>true</self_collide>
     </gazebo>
