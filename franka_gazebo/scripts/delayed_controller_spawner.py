@@ -13,7 +13,12 @@ def main():
     args = ' '.join(sys.argv[1:])
     package = 'controller_manager'
     node_type = 'spawner'
+    # factor in namespace that this node is launched in
     rospy.init_node('delayed_controller_spawner')
+    # Leon: below is needed to spawn the controller in a namespace other than /
+    if rospy.get_namespace() != '/':
+        rospy.loginfo('Namespace is not /, adding __ns argument to controller spawner')
+        args += ' __ns:={}'.format(rospy.get_namespace()[1:])
     rospy.loginfo('Delay spawning of controller. Going to sleep...')
     while True:
         try:
