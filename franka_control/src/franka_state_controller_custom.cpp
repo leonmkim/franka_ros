@@ -445,33 +445,33 @@ void FrankaStateControllerCustom::publishFrankaStates(const ros::Time& time) {
 
     switch (robot_state_.robot_mode) {
       case franka::RobotMode::kOther:
-        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaState::ROBOT_MODE_OTHER;
+        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaStateCustom::ROBOT_MODE_OTHER;
         break;
 
       case franka::RobotMode::kIdle:
-        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaState::ROBOT_MODE_IDLE;
+        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaStateCustom::ROBOT_MODE_IDLE;
         break;
 
       case franka::RobotMode::kMove:
-        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaState::ROBOT_MODE_MOVE;
+        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaStateCustom::ROBOT_MODE_MOVE;
         break;
 
       case franka::RobotMode::kGuiding:
-        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaState::ROBOT_MODE_GUIDING;
+        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaStateCustom::ROBOT_MODE_GUIDING;
         break;
 
       case franka::RobotMode::kReflex:
-        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaState::ROBOT_MODE_REFLEX;
+        publisher_franka_states_.msg_.robot_mode = franka_msgs::FrankaStateCustom::ROBOT_MODE_REFLEX;
         break;
 
       case franka::RobotMode::kUserStopped:
         publisher_franka_states_.msg_.robot_mode =
-            franka_msgs::FrankaState::ROBOT_MODE_USER_STOPPED;
+            franka_msgs::FrankaStateCustom::ROBOT_MODE_USER_STOPPED;
         break;
 
       case franka::RobotMode::kAutomaticErrorRecovery:
         publisher_franka_states_.msg_.robot_mode =
-            franka_msgs::FrankaState::ROBOT_MODE_AUTOMATIC_ERROR_RECOVERY;
+            franka_msgs::FrankaStateCustom::ROBOT_MODE_AUTOMATIC_ERROR_RECOVERY;
         break;
     }
 

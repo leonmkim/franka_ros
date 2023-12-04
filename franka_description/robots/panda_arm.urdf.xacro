@@ -8,7 +8,7 @@
   <!-- Is the robot being simulated in gazebo?" -->
   <xacro:arg name="gazebo" default="false" />
   <!-- Should robot be mounted to tabletop? -->
-  <xacro:arg name="tabletop" default="true" />
+  <xacro:arg name="tabletop" default="false" />
 
   <xacro:unless value="$(arg gazebo)">
     <!-- Create a URDF for a real hardware -->

@@ -27,8 +27,8 @@ namespace franka_control {
  */
 class FrankaStateControllerCustom
     : public controller_interface::MultiInterfaceController<franka_hw::FrankaStateInterface,
-    franka_hw::FrankaModelInterface // added to get various model parameters like mass matrix and coriolis vector
-    > {
+                                                            franka_hw::FrankaModelInterface> { // added to get various model parameters like mass matrix and coriolis vector
+    
  public:
   /**
    * Creates an instance of a FrankaStateControllerCustom.
@@ -64,10 +64,10 @@ class FrankaStateControllerCustom
 
   franka_hw::FrankaStateInterface* franka_state_interface_{};
   std::unique_ptr<franka_hw::FrankaStateHandle> franka_state_handle_{};
-  std::unique_ptr<franka_hw::FrankaModelHandle> franka_model_handle_;
+  std::unique_ptr<franka_hw::FrankaModelHandle> model_handle_;
 
   realtime_tools::RealtimePublisher<tf2_msgs::TFMessage> publisher_transforms_;
-  realtime_tools::RealtimePublisher<franka_msgs::FrankaState> publisher_franka_states_;
+  realtime_tools::RealtimePublisher<franka_msgs::FrankaStateCustom> publisher_franka_states_;
   realtime_tools::RealtimePublisher<sensor_msgs::JointState> publisher_joint_states_;
   realtime_tools::RealtimePublisher<sensor_msgs::JointState> publisher_joint_states_desired_;
   realtime_tools::RealtimePublisher<geometry_msgs::WrenchStamped> publisher_external_wrench_;

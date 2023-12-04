@@ -69,7 +69,7 @@ target_include_directories(franka_state_controller PUBLIC
 
 ## franka_state_controller_custom
 add_library(franka_state_controller_custom
-  src/franka_state_controller.cpp
+  src/franka_state_controller_custom.cpp
 )
 if (Franka_VERSION GREATER_EQUAL 0.9)
     target_compile_definitions(franka_state_controller_custom PUBLIC ENABLE_BASE_ACCELERATION)
@@ -86,6 +86,7 @@ target_link_libraries(franka_state_controller_custom
 
 target_include_directories(franka_state_controller_custom SYSTEM PUBLIC
   ${Franka_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 target_include_directories(franka_state_controller_custom PUBLIC
