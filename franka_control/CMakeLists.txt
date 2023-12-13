@@ -61,6 +61,7 @@ target_link_libraries(franka_state_controller
 
 target_include_directories(franka_state_controller SYSTEM PUBLIC
   ${Franka_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 target_include_directories(franka_state_controller PUBLIC
