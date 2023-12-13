@@ -27,8 +27,8 @@ void FrankaCombinableHW::initROSInterfaces(ros::NodeHandle& robot_hw_nh) {
   setupJointStateInterface(robot_state_ros_);
   setupJointCommandInterface(effort_joint_command_ros_.tau_J, robot_state_ros_, false,
                              effort_joint_interface_);
-  setupLimitInterface<joint_limits_interface::EffortJointSoftLimitsHandle>(
-      effort_joint_limit_interface_, effort_joint_interface_);
+  setupLimitInterface<joint_limits_interface::EffortJointSoftLimitsHandle>( //added nh
+      robot_hw_nh, effort_joint_limit_interface_, effort_joint_interface_);
   setupFrankaStateInterface(robot_state_ros_);
   setupFrankaModelInterface(robot_state_ros_);
 
