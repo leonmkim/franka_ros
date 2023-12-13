@@ -29,6 +29,7 @@
 #include <franka_hw/model_base.h>
 #include <franka_hw/resource_helpers.h>
 
+#include <joint_limits_interface/joint_limits_rosparam.h> // to read joint limits from the rosparam server
 namespace franka_hw {
 
 /**
@@ -352,8 +353,9 @@ class FrankaHW : public hardware_interface::RobotHW {
    * @param[out] limit_interface The limit interface to set up.
    * @param[out] command_interface The command interface to hook the limit interface to.
    */
-  template <typename T>
-  void setupLimitInterface(joint_limits_interface::JointLimitsInterface<T>& limit_interface,
+  template <typename T> // add nodehandle to the argument here
+  void setupLimitInterface(const ros::NodeHandle& nh,
+                           joint_limits_interface::JointLimitsInterface<T>& limit_interface,
                            hardware_interface::JointCommandInterface& command_interface) {
     joint_limits_interface::SoftJointLimits soft_limits;
     joint_limits_interface::JointLimits joint_limits;
@@ -373,6 +375,20 @@ class FrankaHW : public hardware_interface::RobotHW {
           joint_limits.has_acceleration_limits = true;
           joint_limits.max_jerk = franka::kMaxJointJerk[i];
           joint_limits.has_jerk_limits = true;
+
+          // Also load limits from param server if there are any (overwriting the ones from urdf...)
+          // Only hard limits can be specified via yaml, but in turn accel and jerk limits are supported
+          if (!joint_limits_interface::getJointLimits(joint_name, nh, joint_limits)) {
+            ROS_WARN(
+                "FrankaHW: Could not parse joint limit for joint %s from the param server",
+                joint_name.c_str());
+          }
+          else {
+            ROS_WARN("FrankaHW: joint limit for %s from ros param server succesfully loaded!" 
+              "Be aware that motions/effort will be saturated to uphold specified limits.",
+              joint_name.c_str());
+          }
+          
           T limit_handle(command_interface.getHandle(joint_name), joint_limits, soft_limits);
           limit_interface.registerHandle(limit_handle);
         } else {

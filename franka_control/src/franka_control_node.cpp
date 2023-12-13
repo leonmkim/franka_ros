@@ -12,6 +12,7 @@
 #include <franka_hw/franka_hw.h>
 #include <franka_hw/services.h>
 #include <franka_msgs/ErrorRecoveryAction.h>
+#include <franka_msgs/TriggerError.h>
 #include <ros/ros.h>
 #include <std_srvs/Trigger.h>
 
@@ -43,6 +44,13 @@ int main(int argc, char** argv) {
 
     services = std::make_unique<ServiceContainer>();
     franka_hw::setupServices(robot, franka_control.robotMutex(), node_handle, *services);
+
+    // service for e-stop
+    services->advertiseService<franka_msgs::TriggerError>( // trigger error service for killing control
+          node_handle, "/panda/franka_control/trigger_error",
+          [&has_error](auto&& req, auto&& res) {
+            ROS_INFO("has_error switched to %d", req.has_error);
+            has_error = req.has_error; });
 
     recovery_action_server =
         std::make_unique<actionlib::SimpleActionServer<franka_msgs::ErrorRecoveryAction>>(
@@ -144,7 +152,13 @@ int main(int argc, char** argv) {
             control_manager.update(now, period, true);
             franka_control.checkJointLimits();
             franka_control.reset();
-          } else {
+          } 
+          // check if trigger error service has been called and break out of control callback if so
+          else if (has_error) { 
+            ROS_INFO("Has_error triggered! Kill controllers and send recovery action to reset.");
+            return false;
+          }
+          else {
             control_manager.update(now, period);
             franka_control.checkJointLimits();
             franka_control.enforceLimits(period);
