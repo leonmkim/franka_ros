@@ -1,3 +1,10 @@
+# Leon notes
+Depends on libfranka, use franka remote, not mine (I haven't done anything on my fork).
+
+As of 2023-12-02, franka firmware is still at 4.2.0, so use 0.8.0 libfranka
+
+
+
 # ROS integration for Franka Emika research robots
 
 [![CI](https://github.com/frankaemika/franka_ros/actions/workflows/ci.yml/badge.svg)](https://github.com/frankaemika/franka_ros/actions/workflows/ci.yml)
