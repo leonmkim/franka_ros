@@ -60,7 +60,7 @@
     <xacro:if value="${end_effector == 'peg'}">
       <xacro:peg ns="${arm_id}" rpy="0 0 ${-pi/4}" connected_to="${arm_id}_link8" />
     </xacro:if>
-] 
+
     <xacro:if value="${end_effector == 'sphere'}">
       <xacro:sphere_shape ns="${arm_id}" rpy="0 0 ${-pi/4}" connected_to="${arm_id}_link8" radius="$(arg radius)" mu="$(arg mu)" />
     </xacro:if>
