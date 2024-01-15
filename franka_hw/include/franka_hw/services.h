@@ -82,7 +82,8 @@ class ServiceContainer {
 void setupServices(franka::Robot& robot,
                    std::mutex& robot_mutex,
                    ros::NodeHandle& node_handle,
-                   ServiceContainer& services);
+                   ServiceContainer& services); 
+                  //  std::atomic_bool has_error,
 
 /**
  * Callback for the service interface to franka::robot::setCartesianImpedance.

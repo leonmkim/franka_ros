@@ -58,7 +58,7 @@ franka_state_controller:
     - panda_joint6
     - panda_joint7
   arm_id: panda
-  
+
 franka_state_controller_custom:
   type: franka_control/FrankaStateControllerCustom
   publish_rate: 1000  # [Hz]

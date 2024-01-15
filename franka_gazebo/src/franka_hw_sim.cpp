@@ -558,8 +558,9 @@ void FrankaHWSim::updateRobotState(ros::Time time) {
     const auto& joint = this->joints_.at(name);
     this->robot_state_.q[i] = joint->position;
     this->robot_state_.dq[i] = joint->velocity;
-    this->robot_state_.tau_J[i] = joint->effort;
-    this->robot_state_.dtau_J[i] = joint->jerk;
+    // this->robot_state_.tau_J[i] = joint->effort;
+    this->robot_state_.tau_J[i] = -joint->effort; // tau_J is flipped in sim!!
+    this->robot_state_.dtau_J[i] = joint->jerk; // shouldn't be jerk... 
 
     if (joint->control_method == EFFORT) {
       this->robot_state_.q_d[i] = joint->desired_position;
@@ -585,7 +586,8 @@ void FrankaHWSim::updateRobotState(ros::Time time) {
     }
 
     if (this->robot_initialized_) {
-      double tau_ext = joint->effort - joint->command + joint->gravity;
+      // double tau_ext = joint->effort - joint->command + joint->gravity;
+      double tau_ext = (-joint->effort) - joint->gravity; // match the way tau_ext computed in real... 
 
       // Exponential moving average filter from tau_ext -> tau_ext_hat_filtered
       this->robot_state_.tau_ext_hat_filtered[i] =

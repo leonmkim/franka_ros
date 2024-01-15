@@ -50,6 +50,18 @@
       </collision>
     </gazebo>
   </xacro:macro>
+  
+  <xacro:macro name="gazebo-coll-bitmask" params="link bitmask">
+    <gazebo reference="${link}">
+      <collision>
+        <surface>
+          <contact>
+            <collide_bitmask>${bitmask}</collide_bitmask>
+          </contact>
+        </surface>
+      </collision>
+    </gazebo>
+  </xacro:macro>
 
   <!-- ========================================================== -->
   <!-- Adds the required tags to provide a `FrankaStateInterface` -->
@@ -111,5 +123,32 @@
                izz="${1./2  * mass * radius**2}" />
     </inertial>
   </xacro:macro>
+
+  <!-- taken from https://github.com/epfl-lasa/kuka-lwr-ros/blob/2533aa1bb521d531845cea45c93a4ded1ccf6539/kuka_lwr/lwr_description/model/utils.xacro -->
+  <xacro:property name="M_PI" value="3.1415926535897931"/>
+
+  <!-- Little helper macro to define the inertia matrix needed for links. -->
+  <xacro:macro name="cuboid_inertia_def" params="width height length mass">
+    <inertia ixx="${mass * (height * height + width * width) / 12}"
+             iyy="${mass * (height * height + length * length) / 12}"
+             izz="${mass * (width * width + length * length) / 12}"
+             ixy="0" iyz="0" ixz="0"/>
+  </xacro:macro>
+
+  <!-- length is along the z-axis! -->
+  <xacro:macro name="cylinder_inertia_def" params="radius length mass">
+    <inertia ixx="${mass * (3 * radius * radius + length * length) / 12}"
+             iyy="${mass * (3 * radius * radius + length * length) / 12}"
+             izz="${mass * radius* radius / 2}"
+             ixy="0" iyz="0" ixz="0"/>
+  </xacro:macro>
+
+  <xacro:macro name="sphere_inertia_def" params="radius mass">
+    <inertia ixx="${2 * mass * radius * radius / 5}"
+             iyy="${2 * mass * radius * radius / 5}"
+             izz="${2 * mass * radius * radius / 5}"
+             ixy="0" iyz="0" ixz="0"/>
+  </xacro:macro>
+
 
 </robot>

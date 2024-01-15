@@ -20,6 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
   realtime_tools
   roscpp
   rospy
+  franka_controllers
 )
 
 find_package(Eigen3 REQUIRED)
@@ -59,6 +60,7 @@ catkin_package(
     pluginlib
     realtime_tools
     roscpp
+    franka_controllers
   DEPENDS Franka
 )
 

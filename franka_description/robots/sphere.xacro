@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="sphere">
+  <!-- utils /-->
+  <xacro:include filename="$(find franka_description)/robots/utils.xacro"/>
+
+  <xacro:macro name="sphere_shape" params="connected_to:='' ns:='' rpy:='0 0 0' xyz:='0 0 0' radius='' ">
+    
+    <xacro:unless value="${connected_to == ''}">
+      <joint name="${ns}_sphere_joint" type="fixed">
+        <parent link="${connected_to}"/>
+        <child link="${ns}_sphere"/>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+      </joint>
+    </xacro:unless>
+    
+    <xacro:property name="radius" value="${radius}" />
+    <xacro:property name="mass" value="0.23" />
+    
+    <link name="${ns}_sphere">
+      <visual>
+        <origin xyz="0 0 ${radius}" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+        <material name="gray">
+          <color rgba="0.75 0.75 0.75 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${radius}" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 ${radius}"/>
+        <mass value="${mass}"/>
+      	<sphere_inertia_def radius="${radius}" mass="${mass}"/>
+      </inertial>
+	  </link>
+    <!-- add a dummy link to the tip of the sphere for rviz/kdl purposes -->
+    <joint name="${ns}_tip_joint" type="fixed">
+        <parent link="${ns}_sphere"/>
+        <child link="${ns}_tip"/>
+        <origin xyz="0 0 ${radius}" rpy="0 0 0"/>
+    </joint>
+    <link name="${ns}_tip">
+    </link>
+  </xacro:macro>
+</robot>

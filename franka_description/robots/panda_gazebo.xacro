@@ -43,6 +43,7 @@
       </inertial>
     </link>
     <xacro:gazebo-coll-bitmask link="${arm_id}_link0" bitmask="0x0" />
+    <xacro:gazebo-coll-bitmask link="${arm_id}_link0" bitmask="0x0" />
 
     <link name="${arm_id}_link1">
       <visual>
@@ -73,6 +74,8 @@
       <child link="${arm_id}_link1"/>
       <axis xyz="0 0 1"/>
       <limit acceleration="15" lower="-2.9671" effort="87" upper="2.9671" velocity="2.5"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.32" friction="1.045"/>
       <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
       <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.32" friction="1.045"/>
     </joint>
@@ -108,6 +111,8 @@
       <limit acceleration="7.5" lower="-1.8326" effort="87" upper="1.8326" velocity="2.5"/>
       <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
       <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.392" friction="0.992"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.392" friction="0.992"/>
     </joint>
 
     <link name="${arm_id}_link3">
@@ -139,6 +144,8 @@
       <child link="${arm_id}_link3"/>
       <axis xyz="0 0 1"/>
       <limit acceleration="12.5" lower="-2.9671" effort="87" upper="2.9671" velocity="2.5"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.457" friction="0.994"/>
       <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
       <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.457" friction="0.994"/>
     </joint>
@@ -174,6 +181,8 @@
       <limit acceleration="12.5" lower="-3.1416" effort="87" upper="-0.4" velocity="2.5"/>
       <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
       <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.189" friction="0.677"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.189" friction="0.677"/>
     </joint>
 
     <link name="${arm_id}_link5">
@@ -205,6 +214,8 @@
       <child link="${arm_id}_link5"/>
       <axis xyz="0 0 1"/>
       <limit acceleration="15" lower="-2.9671" effort="12" upper="2.9671" velocity="3"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.077" friction="0.732"/>
       <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
       <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.077" friction="0.732"/>
     </joint>
@@ -241,6 +252,8 @@
       <limit acceleration="20" lower="-0.0873" effort="12" upper="3.8223" velocity="3"/>
       <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
       <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.03" friction="0.428"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.03" friction="0.428"/>
     </joint>
 
     <link name="${arm_id}_link7">
@@ -265,6 +278,7 @@
       </inertial>
     </link>
     <xacro:gazebo-coll-bitmask link="${arm_id}_link7" bitmask="0x01" />
+    <xacro:gazebo-coll-bitmask link="${arm_id}_link7" bitmask="0x01" />
 
     <joint name="${arm_id}_joint7" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8973" soft_upper_limit="2.8973"/>
@@ -273,6 +287,8 @@
       <child link="${arm_id}_link7"/>
       <axis xyz="0 0 1"/>
       <limit acceleration="20" lower="-2.9671" effort="12" upper="2.9671" velocity="3"/>
+      <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
+      <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.06" friction="0.54"/>
       <!-- <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.003" friction="0.0"/> -->
       <dynamics D="1" K="7000" mu_coulomb="0" mu_viscous="16" damping="0.06" friction="0.54"/>
     </joint>
@@ -318,6 +334,7 @@
                                           izz="0.0017" />
       </inertial>
     </link>
+    <xacro:gazebo-coll-bitmask link="${arm_id}_hand" bitmask="0x01" />
     <xacro:gazebo-coll-bitmask link="${arm_id}_hand" bitmask="0x01" />
 
     <xacro:macro name="finger-collision" params="sign">
