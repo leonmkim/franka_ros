@@ -6,11 +6,11 @@
   <xacro:arg      name="gazebo"       default="false" /> <!-- Is the robot being simulated in gazebo?" -->
   <xacro:arg      name="radius"       default="1.0"   /> <!-- How large should the sphere be in [m]? -->
   <xacro:arg      name="mu"           default="0.2"   /> <!-- What is the coefficient of friction? -->
-  <xacro:arg      name="real_env"           default="false"   /> <!-- What is the coefficient of friction? -->
+  <xacro:arg      name="tabletop"           default="false"   /> <!-- What is the coefficient of friction? -->
   
   <xacro:property name="arm_id"       value="$(arg arm_id)" />
   <xacro:property name="end_effector"   value="$(arg end_effector)" />
-  <xacro:property name="real_env"   value="$(arg real_env)" />
+  <xacro:property name="tabletop"   value="$(arg tabletop)" />
 
   <!-- Create a URDF for a real hardware -->
   <xacro:unless value="$(arg gazebo)">
@@ -42,13 +42,13 @@
     <!-- Create a simulatable URDF -->
     <xacro:include filename="$(find franka_description)/robots/panda_gazebo.xacro" />
     <xacro:include filename="$(find franka_description)/robots/utils.xacro" />
-    <xacro:include filename="$(find franka_description)/robots/panda_real_env.xacro" />
+    <xacro:include filename="$(find franka_description)/robots/tabletop.xacro" />
     
 
     <xacro:panda_arm arm_id="${arm_id}" />
     
-    <xacro:if value="$(arg real_env)">
-        <xacro:environment/>
+    <xacro:if value="$(arg tabletop)">
+        <xacro:tabletop/>
     </xacro:if>
 
     <xacro:if value="${end_effector == 'hand'}">

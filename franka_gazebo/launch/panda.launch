@@ -75,7 +75,7 @@
         type="delayed_controller_spawner.py"
         name="$(arg arm_id)_controller_spawner"
         respawn="false" output="screen"
-        args="franka_state_controller $(arg controller)"
+        args="franka_state_controller_custom $(arg controller)"
   />
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />

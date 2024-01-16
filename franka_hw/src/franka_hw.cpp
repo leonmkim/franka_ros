@@ -536,12 +536,9 @@ void FrankaHW::initROSInterfaces(ros::NodeHandle& robot_hw_nh) {
                              effort_joint_interface_);
   setupLimitInterface<joint_limits_interface::PositionJointSoftLimitsHandle>(
       robot_hw_nh, position_joint_limit_interface_, position_joint_interface_); //add robot_hw_nh
-      robot_hw_nh, position_joint_limit_interface_, position_joint_interface_); //add robot_hw_nh
   setupLimitInterface<joint_limits_interface::VelocityJointSoftLimitsHandle>(
       robot_hw_nh, velocity_joint_limit_interface_, velocity_joint_interface_); //add robot_hw_nh
-      robot_hw_nh, velocity_joint_limit_interface_, velocity_joint_interface_); //add robot_hw_nh
   setupLimitInterface<joint_limits_interface::EffortJointSoftLimitsHandle>(
-      robot_hw_nh, effort_joint_limit_interface_, effort_joint_interface_); //add robot_hw_nh
       robot_hw_nh, effort_joint_limit_interface_, effort_joint_interface_); //add robot_hw_nh
   setupFrankaStateInterface(robot_state_ros_);
   setupFrankaCartesianPoseInterface(pose_cartesian_command_ros_);
