@@ -7,6 +7,7 @@
   <xacro:arg      name="radius"       default="1.0"   /> <!-- How large should the sphere be in [m]? -->
   <xacro:arg      name="mu"           default="0.2"   /> <!-- What is the coefficient of friction? -->
   <xacro:arg      name="tabletop"           default="false"   /> <!-- What is the coefficient of friction? -->
+  <xacro:arg      name="backdrop"           default="false"   /> <!-- What is the coefficient of friction? -->
   
   <xacro:property name="arm_id"       value="$(arg arm_id)" />
   <xacro:property name="end_effector"   value="$(arg end_effector)" />
@@ -49,6 +50,10 @@
     
     <xacro:if value="$(arg tabletop)">
         <xacro:tabletop/>
+    </xacro:if>
+
+    <xacro:if value="$(arg backdrop)">
+        <xacro:backdrop/>
     </xacro:if>
 
     <xacro:if value="${end_effector == 'hand'}">

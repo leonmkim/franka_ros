@@ -1,0 +1,37 @@
+material Franka/Random1
+{
+  technique
+  {
+    pass
+    {
+      ambient 1.0 1.0 1.0 1.0
+      diffuse 1.0 1.0 1.0 1.0
+      specular 0.2 0.2 0.2 1.0 12.5
+
+      texture_unit
+      {
+        texture random1.png
+        filtering trilinear
+      }
+    }
+  }
+}
+
+material Franka/Random2
+{
+  technique
+  {
+    pass
+    {
+      ambient 1.0 1.0 1.0 1.0
+      diffuse 1.0 1.0 1.0 1.0
+      specular 0.2 0.2 0.2 1.0 12.5
+
+      texture_unit
+      {
+        texture random2.png
+        filtering trilinear
+      }
+    }
+  }
+}
